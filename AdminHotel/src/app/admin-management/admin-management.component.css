@@ -1,0 +1,98 @@
+.addFashion-btn, .addFashion-btn td{
+  border-top: 1px solid white !important;
+  border-right: 1px solid white !important;
+  border-left: 1px solid white !important;
+  border-bottom: 1px solid black;
+}
+.addFashion-btn button{
+  font-size: 18px;
+  font-weight: 500;
+  background-color: white;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: 1.5px solid black;
+  border-radius: 5px;
+  padding-bottom: 5px;
+}
+.addFashion-btn span{
+  color: green;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.listFashion{
+  width: 100%;
+  text-align: center;
+  margin-bottom: 50px;
+}
+.listFashion th{
+  background-color: black;
+  color: white;
+  font-size: 15px;
+}
+.listFashion thead tr:first-child th{
+  background-color: #fff2cc;
+  color: black;
+  font-size: large;
+}
+.listFashion td, .listFashion th{
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.index{
+  width: 1px;
+}
+
+/* Button */
+.container-btn button{
+  font-weight: 500;
+  background-color: white;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.container-btn button:nth-child(2){
+  color: green;
+}
+.container-btn button:nth-child(3){
+  color: red;
+}
+.container-btn button:hover{
+  box-shadow: 0px 0px 7px #888888;
+}
+
+
+/* The Modal (background) */
+.modal-bg {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  margin: 0 auto;
+  padding: 0;
+  border: 1px solid #888;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  overflow-y: auto;
+  max-height: 90vh;
+  max-width: auto;
+  min-width: 85%;
+  max-width: 95%;
+  min-height: 50vh;
+}

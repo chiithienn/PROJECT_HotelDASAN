@@ -1,0 +1,45 @@
+<p>{{errMessage}}</p>
+
+<!-- Detail Room -->
+<div *ngIf="showDetailRoom" class="modal-bg">
+  <div class="modal-content">
+    <div app-detail-room (closeModalEvent)="closeModalDetail($event)" [selectedBranchID]="selectedBranchID" [selectedRoomID]="selectedRoomID"></div>
+  </div>
+</div>
+
+<!-- Update Room -->
+<div *ngIf="showUpdateRoom" class="modal-bg">
+  <div class="modal-content">
+    <div app-update-room (closeModalEvent)="closeModalUpdate($event)" [selectedBranchID]="selectedBranchID" [selectedRoomID]="selectedRoomID"></div>
+  </div>
+</div>
+
+<table border="1" class="listFashion" *ngFor="let branch of branches">
+  <thead>
+    <tr>
+      <th colspan="6">{{branch.BranchName.toUpperCase()}} -- (BranchID: {{branch._id}})</th>
+    </tr>
+    <tr>
+      <th class="index">Index</th>
+      <th>Room Number</th>
+      <th>Type</th>
+      <th>Branch Code</th>
+      <th>Date Created</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let rooms of branch.HotelRoom; let i = index; even as isEven" [ngStyle]="{ background: isEven ? 'white' : 'rgb(188, 221, 232)' }">
+    <tr>
+      <td class="index">{{i+1}}</td>
+      <td>{{rooms.RoomNumber}}</td>
+      <td>{{rooms.RoomType}}</td>
+      <td>{{rooms.RoomBranch}}</td>
+      <td>{{rooms.DateCreated}}</td>
+      <td class="container-btn">
+        <button (click)="openDetailRoom(branch._id, rooms._id)">Detail</button>
+        <button (click)="openUpdateRoom(branch._id,rooms._id)">Update</button>
+        <button>Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

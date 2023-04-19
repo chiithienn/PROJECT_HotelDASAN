@@ -1,0 +1,80 @@
+<div class="title-function">
+  <h3>UPDATE ROOM</h3>
+</div>
+<div class="exit" title="Thoát" (click)="closeModal()">Thoát</div>
+
+<p>{{errMessage}}</p>
+<form #updateForm="ngForm">
+  <table class="infoUpdate">
+    <tr>
+      <td>
+        <label class="label no-top-padding" for="RoomID">Room ID</label>
+        <input type="text" class="form-control id" #RoomID="ngModel" name="RoomID" id="RoomID" [(ngModel)]="room._id" readonly>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label class="label" for="RoomNumber">Room Number</label>
+        <input type="text" class="form-control" #RoomNumber="ngModel" name="RoomNumber" id="RoomNumber" placeholder="Nhập Room Number" [(ngModel)]="room.RoomNumber">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label class="label" for="RoomType">Room Type</label>
+        <input type="text" class="form-control" #RoomType="ngModel" name="RoomType" id="RoomType" placeholder="Nhập Room Type" [(ngModel)]="room.RoomType">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label class="label" for="Capacity">Capacity</label>
+        <input type="number" class="form-control" #Capacity="ngModel" name="Capacity" id="Capacity" placeholder="Nhập Capacity" [(ngModel)]="room.Capacity">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label class="label" for="RoomPrice">Room Price</label>
+        <input type="number" class="form-control" #RoomPrice="ngModel" name="RoomPrice" id="RoomPrice" placeholder="Nhập Room Price" [(ngModel)]="room.RoomPrice">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label class="label" for="RoomDescription">Room Description</label>
+        <textarea class="form-control" #RoomDescription="ngModel" name="RoomDescription" id="RoomDescription" placeholder="Nhập Room Description" [(ngModel)]="room.RoomDescription" cols="30" rows="10"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label class="label">Room Status:</label><br>
+        <div class="container-status">
+          <input type="radio" name="RoomStatus" id="booked" [(ngModel)]="room.RoomStatus" [checked]="room.RoomStatus ? true : false" [value]="booked">
+          <label for="booked">Booked</label>
+          <input type="radio" name="RoomStatus" id="not-booked" [(ngModel)]="room.RoomStatus" [checked]="!room.RoomStatus" [value]="notbooked">
+          <label for="not-booked">Not Booked</label>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label class="label" for="RoomImage">Image Room:</label>
+        <div class="frame-upload-img">
+          <input type="file" class="file-input" #RoomImage="ngModel" name="RoomImage" id="RoomImage" (change)="onFileSelected($event, room)" [(ngModel)]="room.RoomImage">
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="branch-code">
+        <label class="label" for="RoomBranch">Branch Code:</label>
+        <select name="RoomBranch" id="RoomBranch" #BranchCode (change)="room.RoomBranch = BranchCode.value">
+          <option *ngFor="let branch of branches" [value]="branch.BranchCode">{{branch.BranchCode}}</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="btn-update">
+        <button type="submit" (click)="putRoom()">Update Room</button>
+      </td>
+    </tr>
+  </table>
+  <!-- <img src="{{room.RoomImage}}" width="200px" alt=""> -->
+  <p>{{room|json}}</p>
+</form>

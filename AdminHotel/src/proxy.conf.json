@@ -1,0 +1,9 @@
+[
+  {
+    "context": ["/branches"],
+    "target": "http://localhost:4005",
+    "secure": true,
+    "changeOrigin":true,
+    "logLevel":"debug"
+  }
+]
