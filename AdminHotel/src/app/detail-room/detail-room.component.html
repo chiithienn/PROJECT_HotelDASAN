@@ -1,0 +1,42 @@
+<div class="title-function">
+  <h3>ROOM DETAIL</h3>
+</div>
+<div class="exit" title="Thoát" (click)="closeModal()">Thoát</div>
+
+<p>{{errMessage}}</p>
+<table class="detailFashion-table">
+  <thead>
+    <tr>
+      <th>RoomID</th>
+      <th>Room Number</th>
+      <th>Type</th>
+      <th>Capacity</th>
+      <th>Price</th>
+      <th>Branch</th>
+      <th>Status</th>
+      <th>DateCreated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>{{room._id}}</strong></td>
+      <td>{{room.RoomNumber}}</td>
+      <td>{{room.RoomType}}</td>
+      <td>{{room.Capacity}}</td>
+      <td>{{room.RoomPrice}}</td>
+      <td>{{room.RoomBranch}}</td>
+      <td><strong>{{status}}</strong></td>
+      <td>{{room.DateCreated}}</td>
+    </tr>
+  </tbody>
+</table>
+<table class="detailFashion-table img-des">
+  <tr>
+    <th>Image</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img src="{{room.RoomImage}}" width="25%" height="25%"></td>
+    <td class="content-des"><span>{{room.RoomDescription}}</span></td>
+  </tr>
+</table>
