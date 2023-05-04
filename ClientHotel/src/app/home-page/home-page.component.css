@@ -10,9 +10,16 @@ body{
   background-size: cover;
 }
 
+body {
+  font-family: "Ubuntu", sans-serif;
+  /* font-size: 30px; */
+  margin: 0;
+  padding: 0;
+}
+
 /* DẤU TRANG */
 .dautrang {
-  background-image: url(../images/Dautrang.jpg);
+  background-image: url(/assets/images/Dautrang.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;

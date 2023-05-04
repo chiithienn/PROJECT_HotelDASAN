@@ -18,6 +18,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 }
 .title p {
   text-align: center;
