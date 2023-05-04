@@ -30,6 +30,8 @@ body {
   background-size: cover;
   background-attachment: fixed;
   font-family: 'Ubuntu', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .form_content h1 {

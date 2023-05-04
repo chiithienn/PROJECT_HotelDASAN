@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { ForgetPWComponent } from './forget-pw/forget-pw.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RoutingComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    ForgetPWComponent
   ],
   imports: [
     BrowserModule,
