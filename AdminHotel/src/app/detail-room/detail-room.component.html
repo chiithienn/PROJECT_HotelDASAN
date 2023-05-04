@@ -11,6 +11,8 @@
       <th>Room Number</th>
       <th>Type</th>
       <th>Capacity</th>
+      <th>Adult Price</th>
+      <th>Children Price</th>
       <th>Price</th>
       <th>Branch</th>
       <th>Status</th>
@@ -23,7 +25,9 @@
       <td>{{room.RoomNumber}}</td>
       <td>{{room.RoomType}}</td>
       <td>{{room.Capacity}}</td>
-      <td>{{room.RoomPrice}}</td>
+      <td>{{room.AdultPrice.toLocaleString('vi-VN')}}</td>
+      <td>{{room.ChildrenPrice.toLocaleString('vi-VN')}}</td>
+      <td>{{room.RoomPrice.toLocaleString('vi-VN')}}</td>
       <td>{{room.RoomBranch}}</td>
       <td><strong>{{status}}</strong></td>
       <td>{{room.DateCreated}}</td>

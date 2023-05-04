@@ -1,17 +1,11 @@
 <div class="title-function">
-  <h3>UPDATE ROOM</h3>
+  <h3>CREATE ROOM</h3>
 </div>
 <div class="exit" title="Thoát" (click)="closeModal()">Thoát</div>
 
 <p>{{errMessage}}</p>
-<form #updateForm="ngForm">
+<form #createForm="ngForm">
   <table class="infoUpdate">
-    <tr>
-      <td>
-        <label class="label no-top-padding" for="RoomID">Room ID</label>
-        <input type="text" class="form-control id" #RoomID="ngModel" name="RoomID" id="RoomID" [(ngModel)]="room._id" readonly>
-      </td>
-    </tr>
     <tr>
       <td>
         <label class="label" for="RoomNumber">Room Number</label>
@@ -63,7 +57,7 @@
     <tr>
       <td>
         <label class="label" for="RoomPrice">Room Price</label>
-        <input type="number" class="form-control" #RoomPrice="ngModel" name="RoomPrice" id="RoomPrice" placeholder="Nhập Room Price" [(ngModel)]="room.RoomPrice" min="500000" required [class.is-invalid]="RoomPrice.invalid && RoomPrice.touched">
+        <input type="number" class="form-control" #RoomPrice="ngModel" name="RoomPrice" id="RoomPrice" placeholder="Enter Room Price" [(ngModel)]="room.RoomPrice" min="500000" required [class.is-invalid]="RoomPrice.invalid && RoomPrice.touched">
         <div *ngIf="RoomPrice.errors && (RoomPrice.valid || RoomPrice.touched)">
           <small class="text-danger" *ngIf="RoomPrice.errors['required']">Please enter RoomPrice</small>
           <small class="text-danger" *ngIf="RoomPrice.errors['min']">Room price must be at least over 500.000 vnđ</small>
@@ -73,7 +67,7 @@
     <tr>
       <td>
         <label class="label" for="RoomDescription">Room Description</label>
-        <textarea class="form-control" #RoomDescription="ngModel" name="RoomDescription" id="RoomDescription" placeholder="Nhập Room Description" [(ngModel)]="room.RoomDescription" cols="30" rows="10" required [class.is-invalid]="RoomDescription.invalid && RoomDescription.touched"></textarea>
+        <textarea class="form-control" #RoomDescription="ngModel" name="RoomDescription" id="RoomDescription" placeholder="Enter Room Description" [(ngModel)]="room.RoomDescription" cols="30" rows="10" spellcheck="true" required [class.is-invalid]="RoomDescription.invalid && RoomDescription.touched"></textarea>
         <div *ngIf="RoomDescription.errors && (RoomDescription.valid || RoomDescription.touched)">
           <small class="text-danger" *ngIf="RoomDescription.errors['required']">Please enter RoomDescription</small>
         </div>
@@ -105,14 +99,12 @@
     <tr>
       <td class="branch-code">
         <label class="label" for="RoomBranch">Branch Code:</label>
-        <select name="RoomBranch" id="RoomBranch" #BranchCode (change)="room.RoomBranch = BranchCode.value">
-          <option *ngFor="let branch of branches" [value]="branch.BranchCode">{{branch.BranchCode}}</option>
-        </select>
+        <input type="text" class="form-control" #RoomBranch name="RoomBranch" id="RoomBranch" readonly [(ngModel)]="branch.BranchName">
       </td>
     </tr>
     <tr>
-      <td colspan="2" [ngClass]="(updateForm.form.valid) ? valid : invalid">
-        <button type="submit" [disabled]="updateForm.form.invalid || room.RoomNumber == 'none' || room.RoomType == 'none' || room.RoomPrice <= 500000 || room.AdultPrice <= 200000 || room.ChildrenPrice <= 100000 || room.Capacity <= 0 || room.RoomDescription == 'none' || room.RoomImage == 'none'" (click)="putRoom()">Update Room</button>
+      <td colspan="2" [ngClass]="(createForm.form.valid) ? valid : invalid">
+        <button type="submit" [disabled]="createForm.form.invalid || room.RoomNumber == 'none' || room.RoomType == 'none' || room.RoomPrice <= 500000 || room.AdultPrice <= 200000 || room.ChildrenPrice <= 100000 || room.Capacity <= 0 || room.RoomDescription == 'none' || room.RoomImage == 'none'" (click)="postRoom()">Create Room</button>
       </td>
     </tr>
   </table>

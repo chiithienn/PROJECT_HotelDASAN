@@ -5,5 +5,26 @@
     "secure": true,
     "changeOrigin":true,
     "logLevel":"debug"
+  },
+  {
+    "context": ["/users"],
+    "target": "http://localhost:4005",
+    "secure": true,
+    "changeOrigin":true,
+    "logLevel":"debug"
+  },
+  {
+    "context": ["/orders"],
+    "target": "http://localhost:4005",
+    "secure": true,
+    "changeOrigin":true,
+    "logLevel":"debug"
+  },
+  {
+    "context": ["/carts"],
+    "target": "http://localhost:4005",
+    "secure": true,
+    "changeOrigin":true,
+    "logLevel":"debug"
   }
 ]

@@ -27,6 +27,19 @@ export class BranchRoomAPIService {
     return throwError (()=>new Error(error.message))
   }
 
+  getBranch(branchID:string):Observable<any>{
+    const headers =  new HttpHeaders().set("Content-Type","text/plain;charset=utf-8")
+    const requestOptions:Object={
+      headers:headers,
+      responseType: 'text'
+    }
+    return this._http.get<any>("/branches/"+branchID,requestOptions).pipe(
+      map(res=>JSON.parse(res) as Array<IBranches>),
+      retry(3),
+      catchError(this.handleError)
+    )
+  }
+
   getRoom(branchID:string, roomID:string):Observable<any>{
     const headers=new HttpHeaders().set("Content-Type","text/plain;charset=utf-8")
     const requestOptions:Object={
@@ -40,14 +53,14 @@ export class BranchRoomAPIService {
     )
   }
 
-  postFashion(aFashion:any):Observable<any>{
+  postRoom(aRoom:any,branchID:string):Observable<any>{
     const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf-8")
     const requestOptions:Object={
       headers:headers,
       responseType:"text"
     }
-    return this._http.post<any>("/fashions",JSON.stringify(aFashion),requestOptions).pipe(
-      map(res=>JSON.parse(res) as IBranches),
+    return this._http.post<any>("/branches/"+branchID+"/rooms",JSON.stringify(aRoom),requestOptions).pipe(
+      map(res=>JSON.parse(res) as RoomHotel),
       retry(3),
       catchError(this.handleError)
     )
@@ -66,16 +79,31 @@ export class BranchRoomAPIService {
     )
   }
 
-  deleteFashion(fashionId:string):Observable<any>{
+  deleteRoom(branchID:string,roomID:string):Observable<any>{
     const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf-8")
     const requestOptions:Object={
       headers:headers,
       responseType:"text"
     }
-    return this._http.delete<any>("/fashions/"+fashionId,requestOptions).pipe(
+    return this._http.delete<any>("/branches/"+branchID+"/rooms/"+roomID,requestOptions).pipe(
       map(res=>JSON.parse(res) as Array<IBranches>),
       retry(3),
       catchError(this.handleError)
     )
   }
+
+  deleteRooms(branchID:string,roomIds: string[]):Observable<any>{
+    const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf-8")
+    const requestOptions:Object={
+      headers:headers,
+      body: JSON.stringify({roomIds: roomIds}),
+      responseType:"json"
+    }
+    return this._http.delete<any>("/branches/"+branchID+"/rooms",requestOptions).pipe(
+      map(res=>res as Array<IBranches>),
+      retry(3),
+      catchError(this.handleError)
+    )
+}
+
 }

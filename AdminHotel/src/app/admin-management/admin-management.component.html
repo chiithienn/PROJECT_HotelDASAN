@@ -1,5 +1,12 @@
 <p>{{errMessage}}</p>
 
+<!-- Create Room -->
+<div *ngIf="showCreateRoom" class="modal-bg">
+  <div class="modal-content">
+    <div app-create-room (closeModalEvent)="closeModalCreate($event)" [selectedBranchID]="selectedBranchID"></div>
+  </div>
+</div>
+
 <!-- Detail Room -->
 <div *ngIf="showDetailRoom" class="modal-bg">
   <div class="modal-content">
@@ -14,32 +21,50 @@
   </div>
 </div>
 
-<table border="1" class="listFashion" *ngFor="let branch of branches">
-  <thead>
-    <tr>
-      <th colspan="6">{{branch.BranchName.toUpperCase()}} -- (BranchID: {{branch._id}})</th>
-    </tr>
-    <tr>
-      <th class="index">Index</th>
-      <th>Room Number</th>
-      <th>Type</th>
-      <th>Branch Code</th>
-      <th>Date Created</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody *ngFor="let rooms of branch.HotelRoom; let i = index; even as isEven" [ngStyle]="{ background: isEven ? 'white' : 'rgb(188, 221, 232)' }">
-    <tr>
-      <td class="index">{{i+1}}</td>
-      <td>{{rooms.RoomNumber}}</td>
-      <td>{{rooms.RoomType}}</td>
-      <td>{{rooms.RoomBranch}}</td>
-      <td>{{rooms.DateCreated}}</td>
-      <td class="container-btn">
-        <button (click)="openDetailRoom(branch._id, rooms._id)">Detail</button>
-        <button (click)="openUpdateRoom(branch._id,rooms._id)">Update</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="container-btn-branch">
+  <button class="button-17" (click)="handleClick($event)">Hồ Chí Minh</button>
+  <button class="button-17" (click)="handleClick($event)">Hà Nội</button>
+  <button class="button-17" (click)="handleClick($event)">Đà Nẵng</button>
+  <button class="button-17" (click)="handleClick($event)">Phan Thiết</button>
+</div>
+
+<div class="loader" *ngIf="!dataLoaded"></div>
+
+<div class="container-main-content" *ngFor="let branch of branches">
+  <div class="addRoom-btn" *ngIf="branch.BranchName==branchValue">
+    <button (click)="openCreateRoom(branch._id)">Add Room</button>
+    <button (click)="deleteRooms(branch._id)">Delete Multi Rooms</button>
+  </div>
+  <table border="1" class="table table-hover listFashion" *ngIf="branch.BranchName==branchValue">
+    <thead>
+      <tr>
+        <th colspan="7">{{branch.BranchName.toUpperCase()}} -- (BranchID: {{branch._id}})</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th class="index">Index</th>
+        <th>Room Number</th>
+        <th>Type</th>
+        <th>Branch Code</th>
+        <th>Date Created</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let rooms of branch.HotelRoom; let i = index; even as isEven" [ngStyle]="{ background: isEven ? 'white' : 'rgb(188, 221, 232)' }">
+      <tr>
+        <!-- <td><input type="checkbox" name="" id=""></td> -->
+        <td><input type="checkbox" name="" id="" [checked]="roomIds.includes(rooms._id)" (change)="toggleRoomId(rooms._id)"></td>
+        <td class="index">{{i+1}}</td>
+        <td>{{rooms.RoomNumber}}</td>
+        <td>{{rooms.RoomType}}</td>
+        <td>{{rooms.RoomBranch}}</td>
+        <td>{{rooms.DateCreated}}</td>
+        <td class="container-btn">
+          <button class="btn btn-outline-dark" (click)="openDetailRoom(branch._id, rooms._id)">Detail</button>
+          <button class="btn btn-outline-dark" (click)="openUpdateRoom(branch._id,rooms._id)">Update</button>
+          <button class="btn btn-outline-dark" (click)="deleteRoom(branch._id,rooms._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
