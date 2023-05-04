@@ -207,7 +207,33 @@ app.delete("/branches/:branchId/rooms/:roomId", cors(), async (req, res) => {
   res.send("Đã xoá phòng thành công!");
 });
 
+// Xoá nhiều phòng của 1 chi nhánh
+app.delete("/branches/:branchId/rooms", cors(), async (req, res) => {
+  const branchId = new ObjectId(req.params["branchId"]);
+  const roomIds = req.body.roomIds.map((id) => new ObjectId(id));
+  // Tìm chi nhánh theo _id được chỉ định
+  const branch = await branchCollection.findOne({ _id: branchId });
+  if (!branch) {
+    return res.status(404).json({ message: "Branch not found" });
+  }
+  // Tìm các phòng thuộc chi nhánh đó có trong danh sách roomIds
+  const rooms = await roomCollection.find({ _id: { $in: roomIds }, RoomBranch: branch.BranchCode }).toArray();
+  if (rooms.length === 0) {
+    return res.status(404).json({ message: "Rooms not found" });
+  }
+  // Xoá các phòng thuộc danh sách roomIds
+  await roomCollection.deleteMany({ _id: { $in: roomIds }, RoomBranch: branch.BranchCode });
+  // Trả về thông tin các phòng đã xoá
+  res.send(rooms);
+});
+
 // ---------------------- ACCOUNT ----------------------
+
+app.get("/users",cors(),async(req, res)=>{
+  accountCollection = database.collection("Account")
+  const accounts = await accountCollection.find({Type:"Customer"}).toArray();
+  res.send(accounts)
+})
 
 app.post("/users",cors(),async(req,res)=>{
   var crypto = require('crypto')
@@ -283,4 +309,45 @@ app.put('/users/change-password/:id', cors(), async (req, res) => {
   await accountCollection.updateOne({ _id: new ObjectId(userId) }, { $set: { Password: newHash, salt: newSalt } });
 
   res.json({ message: 'Password updated successfully' });
+});
+
+app.put('/users/lock-account', cors(), async (req, res) => {
+  try {
+    const accountName = req.body.AccountName;
+    // const adminAccountName = req.body.AdminAccountName;
+    const adminPassword = req.body.AdminPassword;
+
+    // Check if the admin credentials are correct
+    const adminCollection = database.collection('Account');
+    const adminAccount = await adminCollection.findOne({ Type: 'Admin' });
+
+    if (!adminAccount) {
+      res.status(400).send({ message: 'Invalid admin credentials' });
+      return;
+    }
+
+    const crypto = require('crypto');
+    const hash = crypto.pbkdf2Sync(adminPassword, adminAccount.salt, 1000, 64, 'sha512').toString('hex');
+    if (hash !== adminAccount.Password) {
+      res.status(400).send({ message: 'Incorrect password' });
+      return;
+    }
+
+    // Find the account in the database
+    const accountCollection = database.collection('Account');
+    const account = await accountCollection.findOne({ AccountName: accountName });
+
+    if (!account) {
+      res.status(400).send({ message: 'Account not found' });
+      return;
+    }
+
+    // Update the account in the database
+    await accountCollection.updateOne({ AccountName: accountName }, { $set: { Valid: false } });
+
+    res.send({ message: 'Account locked successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
