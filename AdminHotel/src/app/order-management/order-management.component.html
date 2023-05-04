@@ -1,0 +1,36 @@
+<!-- Detail Order -->
+<div *ngIf="showOrderDetail" class="modal-bg">
+  <div class="modal-content">
+    <div app-order-detail (closeModalEvent)="closeModalDetail($event)" [selectedOrderID]="selectedOrderID"></div>
+  </div>
+</div>
+
+{{errMessage}}
+<table class="table table-hover listOrders" border="1">
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>OrderID</th>
+      <th>Full Name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Date Created</th>
+      <th>Total Price</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders; let i=index">
+      <td>{{i+1}}</td>
+      <td>{{order._id}}</td>
+      <td>{{order.FullName}}</td>
+      <td>{{order.PhoneNumber}}</td>
+      <td>{{order.Email}}</td>
+      <td>{{order.DateCreated}}</td>
+      <td [ngClass]="(order.TotalPrice>5000000) ? high : med">{{order.TotalPrice.toLocaleString('vi-VN')}}</td>
+      <td>
+        <button class="btn btn-outline-dark" (click)="openOrderDetail(order._id)">Detail</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

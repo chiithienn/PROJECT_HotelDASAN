@@ -1,10 +1,31 @@
-.addFashion-btn, .addFashion-btn td{
-  border-top: 1px solid white !important;
-  border-right: 1px solid white !important;
-  border-left: 1px solid white !important;
-  border-bottom: 1px solid black;
+.loader {
+  margin: 180px auto;
+  border: 20px solid #EAF0F6;
+  border-radius: 50%;
+  border-top: 20px solid #FF7A59;
+  border-bottom: 20px solid rgb(97, 97, 246);
+  width: 150px;
+  height: 150px;
+  animation: spinner 2s linear infinite;
 }
-.addFashion-btn button{
+
+@keyframes spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.container-btn-branch{
+  display: flex;
+  justify-content:space-evenly;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.container-btn-branch button{
+  width: 150px;
+  height: 50px;
+}
+
+.addRoom-btn button{
   font-size: 18px;
   font-weight: 500;
   background-color: white;
@@ -12,23 +33,84 @@
   margin-right: 5px;
   border: 1.5px solid black;
   border-radius: 5px;
-  padding-bottom: 5px;
 }
-.addFashion-btn span{
-  color: green;
-  font-weight: bold;
-  font-size: 25px;
+.container-main-content{
+  margin-top: 50px;
+}
+.container-main-content div:first-child button{
+  padding: 0 25px;
+  height: 40px;
+  margin: 0 50px 10px 0;
+}
+
+.button-17 {
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-weight: 500;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+}
+.button-17:hover {
+  background: #F6F9FE;
+  color: #174ea6;
+}
+.button-17:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+.button-17:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+.button-17:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+.button-17:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+}
+.button-17:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+.button-17:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+}
+.button-17:disabled {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }
 
 .listFashion{
   width: 100%;
   text-align: center;
+  vertical-align: middle;
   margin-bottom: 50px;
 }
 .listFashion th{
   background-color: black;
   color: white;
   font-size: 15px;
+  border: 1px solid black;
 }
 .listFashion thead tr:first-child th{
   background-color: #fff2cc;
@@ -45,19 +127,30 @@
 }
 
 /* Button */
+.container-btn{
+  width: 400px;
+}
 .container-btn button{
+  color: black;
   font-weight: 500;
   background-color: white;
   margin-left: 5px;
   margin-right: 5px;
-  border: 1px solid black;
-  border-radius: 5px;
+}
+.container-btn button:nth-child(1)::before{
+  content: '📋 ';
 }
 .container-btn button:nth-child(2){
   color: green;
 }
+.container-btn button:nth-child(2)::before{
+  content: '📝 ';
+}
 .container-btn button:nth-child(3){
   color: red;
+}
+.container-btn button:nth-child(3)::before{
+  content: '🗑 ';
 }
 .container-btn button:hover{
   box-shadow: 0px 0px 7px #888888;

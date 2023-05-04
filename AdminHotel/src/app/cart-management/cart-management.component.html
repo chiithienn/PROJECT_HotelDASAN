@@ -1,0 +1,36 @@
+<!-- Detail Cart -->
+<div *ngIf="showCartDetail" class="modal-bg">
+  <div class="modal-content">
+    <div app-cart-detail (closeModalEvent)="closeModalDetail($event)" [selectedCartID]="selectedCartID"></div>
+  </div>
+</div>
+
+{{errMessage}}
+<table class="table table-hover listCarts" border="1">
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>CartID</th>
+      <th>Full Name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Date Created</th>
+      <th>Total Price</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cart of carts; let i=index">
+      <td>{{i+1}}</td>
+      <td>{{cart._id}}</td>
+      <td>{{cart.FullName}}</td>
+      <td>{{cart.PhoneNumber}}</td>
+      <td>{{cart.Email}}</td>
+      <td>{{cart.DateCreated}}</td>
+      <td [ngClass]="(cart.TotalPrice>5000000) ? high : med">{{cart.TotalPrice.toLocaleString('vi-VN')}}</td>
+      <td>
+        <button class="btn btn-outline-dark" (click)="openCartDetail(cart._id)">Detail</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

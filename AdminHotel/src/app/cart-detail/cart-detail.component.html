@@ -1,0 +1,38 @@
+<div class="title-function">
+  <h3>CART DETAIL</h3>
+</div>
+<div class="exit" title="Thoát" (click)="closeModal()">Thoát</div>
+
+{{errMessage}}
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>DetailID</th>
+        <th>Branch</th>
+        <th>Room Type</th>
+        <th>Room Price</th>
+        <th>Quantity</th>
+        <th>Adults</th>
+        <th>Children</th>
+        <th>Check In</th>
+        <th>Check Out</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cart of carts.CartDetails">
+        <td>{{cart._id}}</td>
+        <td>{{cart.Branch}}</td>
+        <td>{{cart.RoomType}}</td>
+        <td>{{cart.Price.toLocaleString('vi-VN')}}</td>
+        <td>{{cart.RoomQuantity}}</td>
+        <td>{{cart.Adults}}</td>
+        <td>{{cart.Children}}</td>
+        <td>{{cart.CheckInDate}}</td>
+        <td>{{cart.CheckOutDate}}</td>
+        <td><strong>{{cart.TotalLine.toLocaleString('vi-VN')}}</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -8,15 +8,32 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'AdminHotel';
 
-  showAdmin=true
-  showInfo=false
+  hotel=false
+  account=false
+  cart=false
+  order=false
 
-  showAdminPage(){
-    this.showAdmin=true
-    this.showInfo=false
-  }
-  showInfoPage(){
-    this.showAdmin=false
-    this.showInfo=true
+  setActive(activeTab: string) {
+    this.hotel = false;
+    this.account = false;
+    this.cart = false;
+    this.order = false;
+
+    switch(activeTab) {
+      case 'hotel':
+        this.hotel = true;
+        break;
+      case 'account':
+        this.account = true;
+        break;
+      case 'cart':
+        this.cart = true;
+        break;
+      case 'order':
+        this.order = true;
+        break;
+      default:
+        break;
+    }
   }
 }

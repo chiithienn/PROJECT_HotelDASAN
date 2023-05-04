@@ -1,0 +1,109 @@
+<p>{{errMessage}}</p>
+
+<!-- Detail Room -->
+<div *ngIf="showDetailAccount" class="modal-bg">
+  <div class="modal-content">
+    <div app-detail-account (closeModalEvent)="closeModalDetail($event)" [selectedAccountID]="selectedAccountID"></div>
+  </div>
+</div>
+
+<!-- Lock/Unlock Account -->
+<div *ngIf="showLockAccount" class="modal-bg">
+  <div class="modal-content container-lock-p">
+    <div class="title-function">
+      <h3 *ngIf="valid">LOCK ACCOUNT</h3>
+      <h3 *ngIf="!valid">UNLOCK ACCOUNT</h3>
+    </div>
+    <div class="exit" title="Thoát" (click)="closeModalLock()">Thoát</div>
+    <form #formLockUnlock="ngForm" class="container-lock-c">
+      <label class="label no-top-padding" for="AdminPassword">Admin Password</label>
+
+      <div class="row-1">
+        <input class="form-control" type="password" #password="ngModel" name="AdminPassword" id="AdminPassword" placeholder="Admin password" [(ngModel)]="adminPassword" required [class.is-invalid]="password.invalid && password.touched">
+        <div class="check-validation" *ngIf="password.errors && (password.valid || password.touched)">
+          <small class="text-danger" *ngIf="password.errors['required']">Bạn chưa nhập password</small>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <input class="form-control" type="password" #passwordConfirm="ngModel" name="AdminPasswordConfirm" id="AdminPasswordConfirm" placeholder="Admin password confirm" [(ngModel)]="adminPasswordConfirm" required [class.is-invalid]="passwordConfirm.invalid && passwordConfirm.touched">
+        <div class="check-validation" *ngIf="passwordConfirm.errors && (passwordConfirm.valid || passwordConfirm.touched)">
+          <small class="text-danger" *ngIf="passwordConfirm.errors['required']">Bạn chưa nhập password confirm</small>
+        </div>
+      </div>
+
+      <div class="container-btn">
+        <button type="submit" class="btn btn-outline-danger" [disabled]="formLockUnlock.form.invalid || adminPassword == 'none' || adminPasswordConfirm == 'none'" *ngIf="valid" (click)="setValidAccounts(false,anAccount)">Lock</button>
+        <button type="submit" class="btn btn-outline-success" [disabled]="formLockUnlock.form.invalid || adminPassword == 'none' || adminPasswordConfirm == 'none'" *ngIf="!valid" (click)="setValidAccounts(true,anAccount)">Unlock</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Set Valid Accounts -->
+<div *ngIf="showSetValidAccounts" class="modal-bg">
+  <div class="modal-content container-lock-p">
+    <div class="title-function">
+      <h3>SET VALID ACCOUNTS</h3>
+    </div>
+    <div class="exit" title="Thoát" (click)="closeModalSetValid()">Thoát</div>
+    <form #formLockUnlock="ngForm" class="container-lock-c">
+      <label class="label no-top-padding" for="AdminPassword">Admin Password</label>
+
+      <div class="row-1">
+        <input class="form-control" type="password" #password="ngModel" name="AdminPassword" id="AdminPassword" placeholder="Admin password" [(ngModel)]="adminPassword" required [class.is-invalid]="password.invalid && password.touched">
+        <div class="check-validation" *ngIf="password.errors && (password.valid || password.touched)">
+          <small class="text-danger" *ngIf="password.errors['required']">Bạn chưa nhập password</small>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <input class="form-control" type="password" #passwordConfirm="ngModel" name="AdminPasswordConfirm" id="AdminPasswordConfirm" placeholder="Admin password confirm" [(ngModel)]="adminPasswordConfirm" required [class.is-invalid]="passwordConfirm.invalid && passwordConfirm.touched">
+        <div class="check-validation" *ngIf="passwordConfirm.errors && (passwordConfirm.valid || passwordConfirm.touched)">
+          <small class="text-danger" *ngIf="passwordConfirm.errors['required']">Bạn chưa nhập password confirm</small>
+        </div>
+      </div>
+
+      <div class="container-btn">
+        <button type="submit" class="btn btn-outline-danger" [disabled]="formLockUnlock.form.invalid || adminPassword == 'none' || adminPasswordConfirm == 'none'" (click)="setValidAccounts(false,multiAccount)">Lock</button>
+        <button type="submit" class="btn btn-outline-success" [disabled]="formLockUnlock.form.invalid || adminPassword == 'none' || adminPasswordConfirm == 'none'" (click)="setValidAccounts(true,multiAccount)">Unlock</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="margin-bottom">
+  <button class="btn btn-outline-dark" (click)="openSetValidAccounts()">Set Valid Accounts</button>
+</div>
+
+<table class="table table-hover listAccounts" border="1">
+  <thead>
+    <th></th>
+    <th>Index</th>
+    <th>AccountID</th>
+    <th>Full Name</th>
+    <th>Type</th>
+    <th>Phone Number</th>
+    <th>Email</th>
+    <th>Valid</th>
+    <th>DOB</th>
+    <th>Action</th>
+  </thead>
+  <tbody *ngFor="let account of accounts; let i = index">
+    <tr>
+      <td><input type="checkbox" name="" id="" [checked]="accountNames.includes(account.AccountName)" (change)="toggleAccountId(account.AccountName)"></td>
+      <td>{{i+1}}</td>
+      <td>{{account._id}}</td>
+      <td>{{account.FullName}}</td>
+      <td>{{account.Type}}</td>
+      <td>{{account.PhoneNumber}}</td>
+      <td>{{account.Email}}</td>
+      <td><strong>{{account.Valid}}</strong></td>
+      <td>{{account.DOB}}</td>
+      <td>
+        <button class="btn btn-outline-dark detail" (click)="openDetailAccount(account._id)">Detail</button>
+        <button class="btn btn-outline-dark setValid" (click)="openLockAccount(account.AccountName, account.Valid)">Set Valid</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

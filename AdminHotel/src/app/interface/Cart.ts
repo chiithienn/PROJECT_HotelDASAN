@@ -1,6 +1,6 @@
-export interface IOrderDetail{
+export interface ICartOrderDetail{
   _id:any,
-  OrderID:any,
+  CartOrderID:any,
   Branch:string,
   RoomType:string,
   Price:number,
@@ -12,13 +12,10 @@ export interface IOrderDetail{
   TotalLine:number
 }
 
-export interface IOrders{
+export interface ICartOrder{
   _id:any,
   AccountID:any,
   DateCreated:string,
-  FullName:string,
-  PhoneNumber:string,
-  Email:string,
   TotalPrice:number,
-  OrderDetails:Array<IOrderDetail>
+  OrderDetails:Array<ICartOrderDetail>
 }

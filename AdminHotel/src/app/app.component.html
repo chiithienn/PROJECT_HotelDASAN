@@ -305,14 +305,19 @@
   <div class="container-admin">
     <div class="function">
       <p>Trang chủ admin</p>
-      <button [routerLink]="'admin-management'" (click)="showAdminPage()">Quản trị khách sạn</button>
-      <button [routerLink]="'hotel-info-management'" (click)="showInfoPage()">Quản trị thông tin</button>
+      <button (click)="setActive('hotel')" [routerLink]="'admin-management'">Hotel Management</button>
+      <button (click)="setActive('account')" [routerLink]="'account-management'">Account Management</button>
+      <button (click)="setActive('cart')" [routerLink]="'cart-management'">Cart Management</button>
+      <button (click)="setActive('order')" [routerLink]="'order-management'">Order Management</button>
     </div>
     <div class="iframe-function">
-      <p>Thông tin tác vụ</p>
+      <p>Task Information&nbsp;
+        <span *ngIf="hotel">>&nbsp; Hotel Management</span>
+        <span *ngIf="account">>&nbsp; Account Management</span>
+        <span *ngIf="cart">>&nbsp; Cart Management</span>
+        <span *ngIf="order">>&nbsp; Order Management</span>
+      </p>
       <div class="routing">
-        <!-- <iframe *ngIf="showAdmin" [style]="showAdmin ? 'height: 100vh' : ''" src="http://localhost:4001/show-all-fashion"></iframe>
-        <router-outlet *ngIf="showInfo" [style]="showInfo ? 'height: auto' : ''"></router-outlet> -->
         <router-outlet></router-outlet>
       </div>
     </div>

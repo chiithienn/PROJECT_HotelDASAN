@@ -3,36 +3,28 @@ import { RoomHotel } from '../model/BranchRoom';
 import { BranchRoomAPIService } from '../services/branch-room-api.service';
 
 @Component({
-  selector: '[app-update-room]',
-  templateUrl: './update-room.component.html',
-  styleUrls: ['./update-room.component.css']
+  selector: '[app-create-room]',
+  templateUrl: './create-room.component.html',
+  styleUrls: ['./create-room.component.css']
 })
-export class UpdateRoomComponent implements OnInit {
+export class CreateRoomComponent implements OnInit {
   @Input() selectedBranchID!:string
-  @Input() selectedRoomID!:string
   @Output() closeModalEvent = new EventEmitter<boolean>()
 
-  branches:any
+  room = new RoomHotel()
+  branch:any
   errMessage:string=''
-  close:boolean=true
+  close=true
   booked=false
   notbooked=true
   valid = "btn-update"
   invalid = "validation"
 
-  room = new RoomHotel()
-
-  constructor(private _service: BranchRoomAPIService){
-    this._service.getBranches().subscribe({
-      next: (data) => {this.branches=data},
-      error: (err) => {this.errMessage=err.message}
-    })
-  }
+  constructor(private _service:BranchRoomAPIService){}
 
   ngOnInit(): void {
-    this.room._id = this.selectedRoomID
-    this._service.getRoom(this.selectedBranchID, this.selectedRoomID).subscribe({
-      next: (data) => {this.room=data},
+    this._service.getBranch(this.selectedBranchID).subscribe({
+      next: (data) => {this.branch=data},
       error: (err) => {this.errMessage=err.message}
     })
   }
@@ -53,11 +45,12 @@ export class UpdateRoomComponent implements OnInit {
      }
   }
 
-  putRoom(){
-    this._service.putRoom(this.room,this.selectedBranchID,this.selectedRoomID).subscribe({
+  postRoom(){
+    // this.roo.style = this.fashion.style.toUpperCase()
+    this._service.postRoom(this.room, this.selectedBranchID).subscribe({
       next:(data)=>{
-        this.branches=data,
-        alert("Đã cập nhật thành công"),
+        this.room=data;
+        alert("Đã tạo Room mới thành công");
         location.reload()
       },
       error:(err)=>{this.errMessage=err}

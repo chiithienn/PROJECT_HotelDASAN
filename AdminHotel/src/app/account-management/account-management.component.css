@@ -1,0 +1,130 @@
+.exit{
+  float: right;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+  color: red;
+  border: 1.5px solid black;
+  padding: 8px;
+  background-color: white;
+  position: absolute;
+  top: 14px;
+  right: 16px;
+}
+.exit:hover{
+  box-shadow: 0px 0px 10px #bbbbbb;
+}
+.title-function{
+  margin: 0 0 20px 0;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  height: 70px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label{
+  padding: 0 0 5px 10px;
+  font-weight: bold;
+}
+
+.listAccounts{
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+  margin-bottom: 50px;
+}
+.listAccounts th{
+  background-color: black;
+  color: white;
+  font-size: 15px;
+  border: 1px solid black;
+}
+.listAccounts td, .listAccounts th{
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.listAccounts strong{
+  color: red;
+}
+
+
+/* The Modal (background) */
+.modal-bg {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  margin: 0 auto;
+  padding: 0;
+  border: 1px solid #888;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  overflow-y: auto;
+  max-height: 90vh;
+  max-width: auto;
+  min-width: 85%;
+  max-width: 95%;
+  min-height: 50vh;
+}
+
+.container-lock-p{
+  min-width: 300px;
+  min-height: 300px;
+  height: auto;
+  width: 600px;
+}
+.container-lock-c{
+  padding: 10px 100px 30px;
+}
+.row-2{
+  margin: 10px 0 0 0;
+}
+
+.container-btn{
+  text-align: right;
+}
+.container-btn button{
+  font-size: 18px;
+  font-weight: 500;
+  width: 100px;
+  margin: 10px 5px 0;
+  border-radius: 5px;
+}
+
+.check-validation{
+  margin: 0;
+}
+
+.btn-outline-dark:last-child{
+  margin: 0 0 0 20px;
+}
+.detail::before{
+  content: "📋 ";
+}
+.setValid::before{
+  content: "🔐 ";
+}
+.margin-bottom{
+  margin-bottom: 10px;
+}
+.margin-bottom button{
+  margin-left: 0;
+}
