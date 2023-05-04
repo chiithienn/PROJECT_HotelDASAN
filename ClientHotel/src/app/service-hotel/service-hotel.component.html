@@ -1,0 +1,328 @@
+  <body>
+        <!-- <link rel="stylesheet" href="./CSS/register_utility_service.css" /> -->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      />
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="./JS/register_utility_service.js" defer></script>
+    <!-- HEADER -->
+    <div id="header"></div>
+    <!-- TITLE -->
+    <div class="title">
+      <h1>CONVENIENT SERVICES </h1>
+      <p>
+        We want your stay with us to be as special and easy as possible. Dasan
+        has carefully built a list of services and amenities with just that in
+        mind. See what we have to offer below.
+      </p>
+    </div>
+    <!-- INTRO & INFO UTILITY SERVICE -->
+    <div class="row1">
+      <!-- Restaurant -->
+      <div class="item">
+        <div>
+          <h1>RESTAURANT</h1>
+          <p>
+            Our restaurant is luxuriously arranged, delicious and beautiful
+            dishes are guaranteed to make you satisfied.
+          </p>
+          <p>
+            (Note: Reservation is required, we will not handle any
+            non-reservation).
+          </p>
+        </div>
+      </div>
+      <!-- Pool -->
+      <div class="item">
+        <div>
+           <h1>POOL</h1>
+          <p>
+            It's too hot, it's too hot, it's too hot, it's too hot! It's hot
+            like this, where are you going? If you don't know where to go to
+            relieve the heat, sign up for Dasan's swimming pool service right
+            away!
+          </p>
+          <p>(Note: Young children need to be accompanied by an adult!).</p>
+        </div>
+      </div>
+      <!-- Laundry -->
+      <div class="item">
+        <div>
+          <h1>LAUNDRY</h1>
+          <p>
+            Dasan will receive and do laundry for you. Make sure it's clean and
+            fragrant.
+          </p>
+          <p>
+            (Note: Only clothes and towels are accepted for laundry. In
+            addition, Dasan asked permission not to accept any other laundry.)
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row2">
+      <!-- Spa -->
+      <div class="item">
+        <div>
+          <h1>SPA</h1>
+          <p>
+            Spa in Dasan will include: massage, nourishing shampoo and sauna.
+            Help you relax after a long journey.
+          </p>
+          <p>
+            (Note: Reservation is required, we will not handle any
+            non-reservation).
+          </p>
+        </div>
+      </div>
+      <!-- Gym -->
+      <div class="item">
+        <div>
+          <h1>GYM</h1>
+          <p>
+            At the gym we provide a full range of tools and equipment for
+            exercise. In addition, we also have a consultant, training guide to
+            help you get the best experience.
+          </p>
+        </div>
+      </div>
+      <!-- Laundry -->
+      <div class="item">
+        <div>
+          <h1>BAR</h1>
+          <p>
+            A place for fun, entertainment, meeting friends from all over the
+            world. Coming to this place make sure you will forget all your
+            troubles.
+          </p>
+          <p>
+            (Note: Persons under the age of 18 are not allowed to visit or
+            register for this service!)
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- TITLE SERVICE -->
+    <div class="title second">
+      <h1>Service Utilities</h1>
+    </div>
+    <!-- CHOOSE UTILITY SERVICE -->
+    <table class="containerUtility">
+      <!-- Restaurant -->
+      <tr class="rowUtility">
+        <td><img src="assets\images\ava-res.jpg" /></td>
+        <td>
+          <h1>Restaurant</h1>
+          <p>Reservation required (does not handle any unreserved cases).</p>
+        </td>
+        <td>
+          <div id="containerTick1">
+            <span id="tick1" onclick="tick1()" title="Click to select">
+              +
+            </span>
+          </div>
+        </td>
+      </tr>
+      <!-- Pool -->
+      <tr class="rowUtility">
+        <td><img src="assets\images\ava-pool.jpg" /></td>
+        <td>
+          <h1>Pool</h1>
+          <p>Available facilities of the hotel, wish you enjoy the trip.</p>
+        </td>
+      </tr>
+      <!-- Laundry -->
+      <tr class="rowUtility">
+        <td><img src="assets\images\ava-laundry.jpg" /></td>
+        <td>
+          <h1>Laundry</h1>
+          <p>
+            Get laundry for 150.000 VND/kg (Contact the front desk for
+            assistance)
+          </p>
+        </td>
+      </tr>
+      <!-- Spa -->
+      <tr class="rowUtility">
+        <td><img src="assets\images\ava-spa.jpg" /></td>
+        <td>
+          <h1>Spa</h1>
+          <p>Service price is 500,000 VND/person (Reservation required).</p>
+        </td>
+        <td>
+          <div id="containerTick2">
+            <span id="tick2" onclick="tick2()" title="Click to select">
+              +
+            </span>
+          </div>
+        </td>
+      </tr>
+      <!-- Bar -->
+      <tr class="rowUtility">
+        <td><img src="assets\images\ava-bar.jpg" /></td>
+        <td>
+          <h1>Bar</h1>
+          <p>
+            Available facilities of the hotel, wish you enjoy the trip (over
+            18+).
+          </p>
+        </td>
+      </tr>
+      <!-- Gym -->
+      <tr class="rowUtility">
+        <td><img src="assets\images\ava-gym.jpg" /></td>
+        <td>
+          <h1>GYM</h1>
+          <p>Available facilities of the hotel, wish you enjoy the trip.</p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Button Register -->
+    <div class="btnSendReq">
+      <input type="button" value="Booking Now" onclick="popUp()" />
+    </div>
+
+    <!-- MODAL POPUP -->
+    <div class="bgModal" id="bgModal">
+      <div class="headerModal">
+        <span class="close" id="close">&times;</span>
+        <span>PLEASE FILL IN THE FORM BELOW</span>
+      </div>
+      <div class="contentModal">
+        <form action="#">
+          <table class="fillLeft">
+            <tr>
+              <th colspan="2">CONFERENCE BOOKING</th>
+            </tr>
+            <tr>
+              <td><label for="fullName">Full name</label></td>
+              <td><input type="text" name="fullName" required /></td>
+            </tr>
+            <tr>
+              <td><label for="phone">Phone</label></td>
+              <td><input type="text" name="phone" required /></td>
+            </tr>
+            <tr>
+              <td><label for="email">Email</label></td>
+              <td><input type="email" name="email" /></td>
+            </tr>
+            <tr>
+              <td><label for="numReservation">Reservation number</label></td>
+              <td><input type="text" name="numReservation" required /></td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <input
+                  type="button"
+                  value="Send request"
+                  onclick="popUpMessage()"
+                />
+              </td>
+            </tr>
+          </table>
+
+          <!--  -->
+          <div class="fillRight">
+            <table id="restaurant" class="restaurantForm">
+              <tr>
+                <th colspan="2">RESTAURANT</th>
+              </tr>
+              <tr>
+                <td><label for="numPeopleRes">Number of people</label></td>
+                <td>
+                  <input
+                    type="number"
+                    name="numPeopleRes"
+                    id="numPeopleRes"
+                    required
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><label for="fromDateRes">Date from</label></td>
+                <td>
+                  <input
+                    type="date"
+                    name="fromDateRes"
+                    id="fromDateRes"
+                    required
+                  />
+                  <label for="toDateRes">to</label>
+                  <input type="date" name="toDateRes" id="toDateRes" required />
+                </td>
+              </tr>
+              <tr>
+                <td><label for="fromTime">Time from</label></td>
+                <td>
+                  <input type="date" name="fromTime" id="fromTime" required />
+                  <label for="toTime">to</label>
+                  <input type="date" name="toTime" id="toTime" required />
+                </td>
+              </tr>
+            </table>
+            <table id="spa" class="spaForm">
+              <tr>
+                <th colspan="2">SPA</th>
+              </tr>
+              <tr>
+                <td><label for="numPeopleSpa">Number of people</label></td>
+                <td>
+                  <input
+                    type="number"
+                    name="numPeopleSpa"
+                    id="numPeopleSpa"
+                    required
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><label for="fromDateSpa">Date from</label></td>
+                <td>
+                  <input
+                    type="date"
+                    name="fromDateSpa"
+                    id="fromDateSpa"
+                    required
+                  />
+                  <label for="toDateSpa">to</label>
+                  <input type="date" name="toDateSpa" id="toDateSpa" required />
+                </td>
+              </tr>
+              <tr>
+                <td><label for="fromTimeSpa">Time from</label></td>
+                <td>
+                  <input
+                    type="date"
+                    name="fromTimeSpa"
+                    id="fromTimeSpa"
+                    required
+                  />
+                  <label for="toTimeSpa">to</label>
+                  <input type="date" name="toTimeSpa" id="toTimeSpa" required />
+                </td>
+              </tr>
+            </table>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL WHEN CLICK SEND REQUEST -->
+    <div class="modalSendSuccess" id="modalSendSuccess">
+      <div class="messageModal">
+        <div>
+          <img src="./images/success.png" />
+        </div>
+        <div>Request send successfully!</div>
+        <div>We will contact for details consultancy in the minest time.</div>
+        <div>
+          <button id="okClose">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer"></div>
+  </body>
