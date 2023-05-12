@@ -32,6 +32,16 @@
     </tr>
     <tr>
       <td>
+        <label class="label" for="DefaultQty">DefaultQty</label>
+        <input type="number" class="form-control" #DefaultQty="ngModel" name="DefaultQty" id="DefaultQty" placeholder="Enter DefaultQty" [(ngModel)]="room.DefaultQty" min="2" required [class.is-invalid]="DefaultQty.invalid && DefaultQty.touched">
+        <div *ngIf="DefaultQty.errors && (DefaultQty.valid || DefaultQty.touched)">
+          <small class="text-danger" *ngIf="DefaultQty.errors['required']">Please enter DefaultQty</small>
+          <small class="text-danger" *ngIf="DefaultQty.errors['min']">DefaultQty must be greater than or equal to 2</small>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
         <label class="label" for="Capacity">Capacity</label>
         <input type="number" class="form-control" #Capacity="ngModel" name="Capacity" id="Capacity" placeholder="Enter Capacity" [(ngModel)]="room.Capacity" min="2" required [class.is-invalid]="Capacity.invalid && Capacity.touched">
         <div *ngIf="Capacity.errors && (Capacity.valid || Capacity.touched)">
@@ -43,21 +53,23 @@
     <tr>
       <td>
         <label class="label" for="AdultPrice">Adult Price</label>
-        <input type="number" class="form-control" #AdultPrice="ngModel" name="AdultPrice" id="AdultPrice" placeholder="Enter Adult Price" [(ngModel)]="room.AdultPrice" min="200000" required [class.is-invalid]="AdultPrice.invalid && AdultPrice.touched">
+        <input type="number" class="form-control" #AdultPrice="ngModel" name="AdultPrice" id="AdultPrice" placeholder="Enter Adult Price" [(ngModel)]="room.AdultPrice" min="0" required [class.is-invalid]="AdultPrice.invalid && AdultPrice.touched">
         <div *ngIf="AdultPrice.errors && (AdultPrice.valid || AdultPrice.touched)">
           <small class="text-danger" *ngIf="AdultPrice.errors['required']">Please enter Adult Price</small>
-          <small class="text-danger" *ngIf="AdultPrice.errors['min']">Adult price must be at least over 200.000 vnđ</small>
+          <small class="text-danger" *ngIf="AdultPrice.errors['min']">Not less than 0</small>
         </div>
+        <small class="text-danger" *ngIf="AdultPrice.valid && AdultPrice.touched && AdultPrice.value<200000 && AdultPrice.value !== 0">Adult price can be zero or must be more than 200.000 vnđ</small>
       </td>
     </tr>
     <tr>
       <td>
         <label class="label" for="ChildrenPrice">Children Price</label>
-        <input type="number" class="form-control" #ChildrenPrice="ngModel" name="ChildrenPrice" id="ChildrenPrice" placeholder="Enter Children Price" [(ngModel)]="room.ChildrenPrice" min="100000" required [class.is-invalid]="ChildrenPrice.invalid && ChildrenPrice.touched">
+        <input type="number" class="form-control" #ChildrenPrice="ngModel" name="ChildrenPrice" id="ChildrenPrice" placeholder="Enter Children Price" [(ngModel)]="room.ChildrenPrice" min="0" required [class.is-invalid]="ChildrenPrice.invalid && ChildrenPrice.touched">
         <div *ngIf="ChildrenPrice.errors && (ChildrenPrice.valid || ChildrenPrice.touched)">
           <small class="text-danger" *ngIf="ChildrenPrice.errors['required']">Please enter Children Price</small>
-          <small class="text-danger" *ngIf="ChildrenPrice.errors['min']">Children price must be at least over 100.000 vnđ</small>
+          <small class="text-danger" *ngIf="ChildrenPrice.errors['min']">Not less than 0</small>
         </div>
+        <small class="text-danger" *ngIf="ChildrenPrice.valid && ChildrenPrice.touched && ChildrenPrice.value<100000 && ChildrenPrice.value !== 0">Children price can be zero or must be more than 100.000 vnđ</small>
       </td>
     </tr>
     <tr>
@@ -81,20 +93,9 @@
     </tr>
     <tr>
       <td>
-        <label class="label">Room Status:</label><br>
-        <div class="container-status">
-          <input type="radio" name="RoomStatus" id="booked" [(ngModel)]="room.RoomStatus" [checked]="room.RoomStatus ? true : false" [value]="booked">
-          <label for="booked">Booked</label>
-          <input type="radio" name="RoomStatus" id="not-booked" [(ngModel)]="room.RoomStatus" [checked]="!room.RoomStatus" [value]="notbooked">
-          <label for="not-booked">Not Booked</label>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>
         <label class="label" for="RoomImage">Image Room:</label>
         <div class="frame-upload-img">
-          <input type="file" class="file-input" #RoomImage="ngModel" name="RoomImage" id="RoomImage" (change)="onFileSelected($event, room)" [(ngModel)]="room.RoomImage" required [class.is-invalid]="RoomImage.invalid && RoomImage.touched">
+          <input type="file" class="file-input" #RoomImage="ngModel" name="RoomImage" id="RoomImage" [(ngModel)]="room.RoomImage" (change)="onFileSelected($event, room)" required [class.is-invalid]="RoomImage.invalid && RoomImage.touched">
           <img src="{{room.RoomImage}}">
         </div>
         <div *ngIf="RoomImage.errors && (RoomImage.valid || RoomImage.touched)">
@@ -105,14 +106,19 @@
     <tr>
       <td class="branch-code">
         <label class="label" for="RoomBranch">Branch Code:</label>
-        <select name="RoomBranch" id="RoomBranch" #BranchCode (change)="room.RoomBranch = BranchCode.value">
+        <!-- <select name="RoomBranch" id="RoomBranch" #BranchCode (change)="room.RoomBranch = BranchCode.value">
           <option *ngFor="let branch of branches" [value]="branch.BranchCode">{{branch.BranchCode}}</option>
+        </select> -->
+        <select name="RoomBranch" id="RoomBranch" #BranchCode [(ngModel)]="room.RoomBranch">
+          <option *ngFor="let branch of branches" [value]="branch.BranchCode" [selected]="branch.BranchCode === room.RoomBranch">
+            {{branch.BranchCode}}
+          </option>
         </select>
       </td>
     </tr>
     <tr>
       <td colspan="2" [ngClass]="(updateForm.form.valid) ? valid : invalid">
-        <button type="submit" [disabled]="updateForm.form.invalid || room.RoomNumber == 'none' || room.RoomType == 'none' || room.RoomPrice <= 500000 || room.AdultPrice <= 200000 || room.ChildrenPrice <= 100000 || room.Capacity <= 0 || room.RoomDescription == 'none' || room.RoomImage == 'none'" (click)="putRoom()">Update Room</button>
+        <button type="submit" [disabled]="updateForm.form.invalid || room.RoomNumber == 'none' || room.RoomType == 'none' || room.RoomPrice < 500000 || room.AdultPrice < 0 || room.ChildrenPrice < 0 || room.DefaultQty < 2 || room.Capacity < 2 ||  room.RoomDescription == 'none' || room.RoomImage == 'none'" (click)="putRoom()">Update Room</button>
       </td>
     </tr>
   </table>

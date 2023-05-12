@@ -1,10 +1,9 @@
 export interface ICartOrderDetail{
   _id:any,
-  CartOrderID:any,
+  CartID:any,
   Branch:string,
   RoomType:string,
   Price:number,
-  RoomQuantity:number,
   Adults:number,
   Children:number,
   CheckInDate:string,
@@ -16,6 +15,9 @@ export interface ICartOrder{
   _id:any,
   AccountID:any,
   DateCreated:string,
+  FullName:string,
+  PhoneNumber:string,
+  Email:string,
   TotalPrice:number,
-  OrderDetails:Array<ICartOrderDetail>
+  CartDetails:Array<ICartOrderDetail>
 }

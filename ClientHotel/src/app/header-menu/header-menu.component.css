@@ -11,11 +11,7 @@ body {
   margin: auto;
 }
 
-header li {
-  list-style: none;
-}
-
-header a {
+header a, header li span {
   text-decoration: none;
   transition: 0.5s;
 }
@@ -41,26 +37,30 @@ header {
 }
 
 .nav-menu {
-  height: 350px;
+  height: 50px;
+  line-height: 50px;
   display: flex;
 }
 
 header ul {
-  top: 30px;
+  top: 25px;
   padding: 0 20px 0 0;
   position: absolute;
   right: 0px;
 }
 
 header li {
-  margin-right: 30px;
+  margin-right: 10px;
+  list-style: none;
+  /* background-color: lightblue; */
+  padding: 0 15px;
 }
 
 .bar {
   background-color: black;
 }
 
-header ul li a {
+header ul li a, header li span {
   font-size: 15px;
   color: #dfaa5b;
   text-transform: uppercase;
@@ -68,19 +68,20 @@ header ul li a {
   transition: 0.5s;
 }
 
-header ul li a:hover {
+header ul li a:hover, header ul li span:hover {
   color: white;
+  cursor: pointer;
 }
 
 .logo {
   margin-top: -17px;
-  margin-left: -80px;
+  /* margin-left: -80px; */
   position: absolute;
 }
 
 .img_logo {
-  margin-top: -10px;
-  margin-left: -510px;
+  margin-top: 8px;
+  margin-left: -100px;
   width: 70px;
   height: auto;
 }
@@ -141,7 +142,7 @@ li.dropdown {
     background-color: rgba(255, 222, 173, 0);
   }
 
-  header ul li a {
+  header ul li a, header ul li span {
     color: #dfaa5b;
   }
 
@@ -179,4 +180,71 @@ li.dropdown {
     .signin {
       display: none;
   }
+}
+
+/* ACCOUNT */
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown img{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #dfdfdf;
+  margin-bottom: 6px;
+}
+.dropdown .cart{
+  border-radius: 0;
+  background: none;
+  width: 30px;
+  height: 30px;
+  margin: 0px 20px 0 0;
+}
+.cart-qty{
+  padding: 1px 5px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: red;
+  font-weight: bold;
+  color: white !important;
+  position: relative;
+  top: -10px;
+  left: 35px;
+}
+.dropdown img:hover{
+  cursor: pointer;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 75px;
+  left: -10px;
+  overflow: auto;
+  background-color:#fff;
+  /* border-radius:5px; */
+  text-align: center;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+}
+
+.dropdown{
+  margin-left: 200px;
+}
+
+.dropdown-options a {
+  display: block;
+  color: black !important;
+  padding: 5px;
+  text-decoration: none;
+  width: 180px;
+  padding:0px 0px;
+  letter-spacing: 1px;
+}
+
+.dropdown-options a:hover {
+  color: #dd9935 !important;
+  background-color: #ddd;
+  border-radius:5px;
 }

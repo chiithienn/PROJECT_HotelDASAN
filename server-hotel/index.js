@@ -65,79 +65,161 @@ accountCollection = database.collection("Account")
 // });
 
 app.get("/orders", cors(), async (req, res) => {
+  // try {
+
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ message: "Internal server error" });
+  // }
+  const orders = await orderCollection.find({}).toArray();
+  const orderDetails = await orderDetailCollection.find({}).toArray();
+  const rooms = await roomCollection.find({}).toArray();
+
+  // Tạo một đối tượng mới chứa thông tin các order và order detail của chúng
+  const result = await Promise.all(orders.map(async (order) => {
+    const orderDetailItems = orderDetails
+      .filter((orderDetail) => orderDetail.OrderID.toString() === order._id.toString())
+      .map((orderDetail) => {
+        const room = rooms.find((room) => room.RoomType === orderDetail.RoomType);
+        const totalLine = calculateTotalPrice(orderDetail, room, orderDetail.CheckInDate, orderDetail.CheckOutDate);
+        return {
+          ...orderDetail,
+          TotalLine: totalLine,
+        };
+      });
+
+    const totalPrice = orderDetailItems.reduce((sum, orderDetailItem) => sum + orderDetailItem.TotalLine, 0);
+    const account = await accountCollection.findOne({ _id: new ObjectId(order.AccountID) });
+    return {
+      ...order,
+      FullName: account.FullName,
+      PhoneNumber: account.PhoneNumber,
+      Email: account.AccountName,
+      TotalPrice: totalPrice,
+      OrderDetails: orderDetailItems,
+    };
+  }));
+
+  res.send(result);
+});
+
+app.post('/carts', async (req, res) => {
+  const accountID = req.body.AccountID;
+  const cartDetails = req.body.CartDetails;
+  const dateCreated = moment().format('YYYY-MM-DD');
+
+  const cart = {
+    AccountID: accountID,
+    DateCreated: dateCreated,
+  };
+
+  const existingCart = await cartCollection.findOne({ AccountID: accountID });
+  let cartID;
+  if (existingCart) {
+    cartID = existingCart._id;
+    await cartCollection.updateOne({ AccountID: accountID }, { $set: { DateCreated: dateCreated } });
+  } else {
+    const cartResult = await cartCollection.insertOne(cart);
+    cartID = cartResult.insertedId;
+  }
+
+  for (let i = 0; i < cartDetails.length; i++) {
+    cartDetails[i].CartID = cartID;
+
+    let isAvailable = true;
+    const existingCartDetails = await cartDetailCollection.find({ RoomID: cartDetails[i].RoomID, CartID: cartDetails[i].CartID }).toArray();
+    for (const existingCartDetail of existingCartDetails) {
+      const existingCheckInDate = moment(existingCartDetail.CheckInDate);
+      const existingCheckOutDate = moment(existingCartDetail.CheckOutDate);
+      const newCheckInDate = moment(cartDetails[i].CheckInDate);
+      const newCheckOutDate = moment(cartDetails[i].CheckOutDate);
+
+      if(
+        newCheckInDate==existingCheckInDate || 
+        (newCheckInDate>=existingCheckInDate && newCheckInDate<=existingCheckOutDate) || 
+        newCheckInDate==existingCheckOutDate || 
+        newCheckOutDate==existingCheckInDate || 
+        (newCheckOutDate>=existingCheckInDate && newCheckOutDate<=existingCheckOutDate) || 
+        newCheckOutDate==existingCheckOutDate || 
+        (newCheckInDate<=existingCheckInDate && newCheckOutDate>=existingCheckOutDate)
+      ){
+        isAvailable = false;
+        break;
+      }
+    }
+    if(!isAvailable){
+      // availableCartDetail.push(cartDetails[i]);
+      res.status(400).send({ message: 'This room is already booked' });
+      return;
+    }
+    // const roomID = cartDetails[i].RoomID;
+    // const checkInDate = cartDetails[i].CheckInDate;
+    // const checkOutDate = cartDetails[i].CheckOutDate;
+    // await roomCollection.updateOne(
+    //   { _id: new ObjectId(roomID) },
+    //   {
+    //     $push: {
+    //       BookedDateRanges: { CheckInDate: checkInDate, CheckOutDate: checkOutDate },
+    //     },
+    //   }
+    // );
+  }
+  const cartDetailsResult = await cartDetailCollection.insertMany(cartDetails);
+
+  res.send({
+    _id: cartID,
+    AccountID: accountID,
+    DateCreated: dateCreated,
+    CartDetails: cartDetails,
+  });
+});
+
+app.delete("/carts/cart-detail", cors(), async (req, res) => {
+  const cartDetailID = req.body.cartDetailID; // Lấy giá trị của cartDetailID từ body
+
   try {
-    const orders = await orderCollection.find({}).toArray();
-    const orderDetails = await orderDetailCollection.find({}).toArray();
-    const rooms = await roomCollection.find({}).toArray();
-
-    // Tạo một đối tượng mới chứa thông tin các order và order detail của chúng
-    const result = await Promise.all(orders.map(async (order) => {
-      const orderDetailItems = orderDetails
-        .filter((orderDetail) => orderDetail.OrderID.toString() === order._id.toString())
-        .map((orderDetail) => {
-          const room = rooms.find((room) => room.RoomType === orderDetail.RoomType);
-          const totalLine = calculateTotalPrice(orderDetail, room, orderDetail.CheckInDate, orderDetail.CheckOutDate);
-          return {
-            ...orderDetail,
-            TotalLine: totalLine,
-          };
-        });
-
-      const totalPrice = orderDetailItems.reduce((sum, orderDetailItem) => sum + orderDetailItem.TotalLine, 0);
-      const account = await accountCollection.findOne({ _id: order.AccountID });
-      return {
-        ...order,
-        FullName: account.FullName,
-        PhoneNumber: account.PhoneNumber,
-        Email: account.Email,
-        TotalPrice: totalPrice,
-        OrderDetails: orderDetailItems,
-      };
-    }));
-
-    res.send(result);
+    const result = await cartDetailCollection.deleteOne({ _id: new ObjectId(cartDetailID) });
+    if (result.deletedCount === 0) {
+      return res.status(404).send("Cart detail not found");
+    }
+    res.send("Cart detail deleted successfully");
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    console.log(error);
+    res.status(500).send("Internal server error");
   }
 });
 
 app.get("/carts", cors(), async (req, res) => {
-  try {
-    const carts = await cartCollection.find({}).toArray();
-    const cartDetails = await cartDetailCollection.find({}).toArray();
-    const rooms = await roomCollection.find({}).toArray();
+  const carts = await cartCollection.find({}).toArray();
+  const cartDetails = await cartDetailCollection.find({}).toArray();
+  const rooms = await roomCollection.find({}).toArray();
 
-    // Tạo một đối tượng mới chứa thông tin các order và order detail của chúng
-    const result = await Promise.all(carts.map(async (cart) => {
-      const cartDetailItems = cartDetails
-        .filter((cartDetail) => cartDetail.CartOrderID.toString() === cart._id.toString())
-        .map((cartDetail) => {
-          const room = rooms.find((room) => room.RoomType === cartDetail.RoomType);
-          const totalLine = calculateTotalPrice(cartDetail, room, cartDetail.CheckInDate, cartDetail.CheckOutDate);
-          return {
-            ...cartDetail,
-            TotalLine: totalLine,
-          };
-        });
+  // Tạo một đối tượng mới chứa thông tin các order và order detail của chúng
+  const result = await Promise.all(carts.map(async (cart) => {
+    const cartDetailItems = cartDetails
+      .filter((cartDetail) => cartDetail.CartID.toString() === cart._id.toString())
+      .map((cartDetail) => {
+        const room = rooms.find((room) => room._id.toString() === cartDetail.RoomID.toString());
+        const totalLine = calculateTotalPrice(cartDetail, room, cartDetail.CheckInDate, cartDetail.CheckOutDate);
+        return {
+          ...cartDetail,
+          TotalLine: totalLine,
+        };
+      });
 
-      const totalPrice = cartDetailItems.reduce((sum, cartDetailItem) => sum + cartDetailItem.TotalLine, 0);
-      const account = await accountCollection.findOne({ _id: cart.AccountID });
-      return {
-        ...cart,
-        FullName: account.FullName,
-        PhoneNumber: account.PhoneNumber,
-        Email: account.Email,
-        TotalPrice: totalPrice,
-        CartDetails: cartDetailItems,
-      };
-    }));
+    const totalPrice = cartDetailItems.reduce((sum, cartDetailItem) => sum + cartDetailItem.TotalLine, 0);
+    const account = await accountCollection.findOne({ _id: new ObjectId(cart.AccountID) });
+    return {
+      ...cart,
+      FullName: account.FullName,
+      PhoneNumber: account.PhoneNumber,
+      Email: account.AccountName,
+      TotalPrice: totalPrice,
+      CartDetails: cartDetailItems,
+    };
+  }));
 
-    res.send(result);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
+  res.send(result);
 });
 
 function calculateTotalPrice(orderDetail, room, checkInDate, checkOutDate) {
@@ -160,31 +242,72 @@ function calculateTotalPrice(orderDetail, room, checkInDate, checkOutDate) {
   }
 }
 
-app.post("/update-cart-to-order", cors(), async (req, res) => {
+app.post("/carts/update-cart-to-order", cors(), async (req, res) => {
   const cartId = req.body.cartId;
-  const status = req.body.Status;
-  if(status!==true){
-    return res.status(400).json({ message: "Cart is not ready for update to order" });
-  }
+  const dateCreated = moment().format('YYYY-MM-DD');
+  
   const cart = await cartCollection.findOne({_id: new ObjectId(cartId)});
-  const cartDetails = await cartDetailCollection.find({ CartOrderID: cart._id }).toArray();
+  const cartDetails = await cartDetailCollection.find({ CartID: cart._id }).toArray();
+
+  for (let i = 0; i < cartDetails.length; i++) {
+    // cartDetails[i].CartID = cartID;
+
+    let isAvailable = true;
+    const roomInCart = await roomCollection.findOne({ _id: new ObjectId(cartDetails[i].RoomID) });
+    for (const roomBooked of roomInCart.BookedDateRanges) {
+      const roomBookedCheckInDate = moment(roomBooked.CheckInDate);
+      const roomBookedCheckOutDate = moment(roomBooked.CheckOutDate);
+      const newCheckInDate = moment(cartDetails[i].CheckInDate);
+      const newCheckOutDate = moment(cartDetails[i].CheckOutDate);
+
+      if(
+        newCheckInDate==roomBookedCheckInDate || 
+        (newCheckInDate>=roomBookedCheckInDate && newCheckInDate<=roomBookedCheckOutDate) || 
+        newCheckInDate==roomBookedCheckOutDate || 
+        newCheckOutDate==roomBookedCheckInDate || 
+        (newCheckOutDate>=roomBookedCheckInDate && newCheckOutDate<=roomBookedCheckOutDate) || 
+        newCheckOutDate==roomBookedCheckOutDate || 
+        (newCheckInDate<=roomBookedCheckInDate && newCheckOutDate>=roomBookedCheckOutDate)
+      ){
+        isAvailable = false;
+        break;
+      }
+    }
+    if(!isAvailable){
+      // availableCartDetail.push(cartDetails[i]);
+      res.status(400).send({ message: 'This room is already booked' });
+      return;
+    }
+    const roomID = cartDetails[i].RoomID;
+    const checkInDate = cartDetails[i].CheckInDate;
+    const checkOutDate = cartDetails[i].CheckOutDate;
+    await roomCollection.updateOne(
+      { _id: new ObjectId(roomID) },
+      {
+        $push: {
+          BookedDateRanges: { CheckInDate: checkInDate, CheckOutDate: checkOutDate },
+        },
+      }
+    );
+  }
 
   const order = {
     _id: cart._id,
     AccountID: cart.AccountID,
-    DateCreated: cart.DateCreated
+    DateCreated: dateCreated
   };
 
   const OrderDetails = [];
   cartDetails.forEach((cartDetail) => {
     const orderDetail = {
-      OrderID: cartDetail.CartOrderID,
+      OrderID: cartDetail.CartID,
+      RoomID: cartDetail.RoomID,
       Branch: cartDetail.Branch,
       RoomType: cartDetail.RoomType,
       Price: cartDetail.Price,
-      RoomQuantity: cartDetail.RoomQuantity,
       Adults: cartDetail.Adults,
       Children: cartDetail.Children,
+      Capacity: cartDetail.Capacity,
       CheckInDate: cartDetail.CheckInDate,
       CheckOutDate: cartDetail.CheckOutDate,
     };
@@ -195,7 +318,7 @@ app.post("/update-cart-to-order", cors(), async (req, res) => {
   const newOrderDetails = await orderDetailCollection.insertMany(OrderDetails);
 
   await cartCollection.deleteOne({ _id: cart._id });
-  await cartDetailCollection.deleteMany({ CartOrderID: cart._id });
+  await cartDetailCollection.deleteMany({ CartID: cart._id });
 
   res.status(200).json({ message: "Checkout success" });
 });
@@ -203,6 +326,71 @@ app.post("/update-cart-to-order", cors(), async (req, res) => {
 // =====================================================
 // ---------------------- BRANCH - ROOM ----------------------
 // =====================================================
+
+app.post("/branches/rooms/not-booked", cors(), async (req, res) => {
+  const { branchCode, adults, children, checkInDate, checkOutDate } = req.body;
+
+  const rooms = await roomCollection
+    .find({ RoomBranch: branchCode })
+    .toArray();
+
+  const availableRooms = [];
+
+  for (const room of rooms) {
+    // Kiểm tra nếu tổng số người vượt quá sức chứa của phòng thì bỏ qua phòng đó
+    if (adults + children > room.Capacity) {
+      continue;
+    }
+
+    // Kiểm tra xem phòng có sẵn trong khoảng thời gian được yêu cầu không
+    let isAvailable = true;
+
+    for (const bookedDate of room.BookedDateRanges) {
+      const roomCheckInDate = moment(bookedDate.CheckInDate);
+      const roomCheckOutDate = moment(bookedDate.CheckOutDate);
+      const reqCheckInDate = moment(checkInDate);
+      const reqCheckOutDate = moment(checkOutDate);
+
+      if(
+        reqCheckInDate==roomCheckInDate || 
+        (reqCheckInDate>=roomCheckInDate && reqCheckInDate<=roomCheckOutDate) || 
+        reqCheckInDate==roomCheckOutDate || 
+        reqCheckOutDate==roomCheckInDate || 
+        (reqCheckOutDate>=roomCheckInDate && reqCheckOutDate<=roomCheckOutDate) || 
+        reqCheckOutDate==roomCheckOutDate || 
+        (reqCheckInDate<=roomCheckInDate && reqCheckOutDate>=roomCheckOutDate)
+      ){
+        isAvailable = false;
+        break;
+      }
+    }
+
+    if (isAvailable) {
+      availableRooms.push(room);
+    }
+  }
+
+  const branch = await branchCollection.findOne({ BranchCode: branchCode });
+
+  const result = {
+    _id: branch._id,
+    BranchName: branch.BranchName,
+    HotelName: branch.HotelName,
+    HotelRoom: availableRooms,
+  };
+
+  res.send(result);
+});
+
+app.get("/branches/only", cors(), async (req, res) => {
+  try {
+    const branches = await branchCollection.find({}).toArray();
+    res.send(branches)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 // Lấy all rooms của all branchs
 app.get("/branches", cors(), async (req, res) => {
@@ -243,6 +431,51 @@ app.get("/branches/:branchId", cors(), async (req, res) => {
     res.send(result)
 });
 
+app.get("/branches/distinct/rooms", cors(), async (req, res) => {
+  try {
+    const branches = await branchCollection.find({}).toArray();
+    const rooms = await roomCollection.find({}).toArray();
+    
+    // Tạo một đối tượng mới chứa thông tin các phòng đầu tiên có RoomType khác nhau
+    const result = [];
+    
+    // Lặp qua từng chi nhánh
+    for (const branch of branches) {
+      // Tìm tất cả các phòng thuộc chi nhánh này
+      const branchRooms = rooms.filter((room) => room.RoomBranch === branch.BranchCode);
+      
+      // Tạo một đối tượng mới chứa thông tin phòng đầu tiên có RoomType khác nhau của chi nhánh này
+      const distinctRooms = [];
+      
+      // Lặp qua từng loại phòng (RoomType) trong chi nhánh này
+      const roomTypes = [...new Set(branchRooms.map((room) => room.RoomType))];
+      for (const roomType of roomTypes) {
+        // Tìm phòng đầu tiên có RoomType này trong chi nhánh này
+        const firstRoom = branchRooms.find((room) => room.RoomType === roomType);
+        if (firstRoom) {
+          distinctRooms.push(firstRoom);
+        }
+      }
+      
+      // Thêm đối tượng chứa thông tin phòng đầu tiên có RoomType khác nhau của chi nhánh này vào kết quả
+      result.push({
+        _id: branch._id,
+        BranchName: branch.BranchName,
+        HotelName: branch.HotelName,
+        BranchCode: branch.BranchCode,
+        Description: branch.Description,
+        BranchImage: branch.BranchImage,
+        HotelRoom: distinctRooms,
+      });
+    }
+  
+    res.send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // Lấy all rooms của 1 branch
 app.get("/branches/:branchId/rooms", cors(), async (req, res) => {
     const branchId = new ObjectId(req.params["branchId"]);
@@ -276,19 +509,22 @@ app.post("/branches/:branchId/rooms", cors(), async (req, res) => {
   const date_created = moment().format('YYYY-MM-DD');
 
   const branchId = new ObjectId(req.params["branchId"]);
-  const { RoomNumber, RoomType, Capacity, RoomPrice, RoomDescription, RoomStatus, RoomImage } = req.body;
+  const { RoomNumber, RoomType, DefaultQty, Capacity, RoomPrice, AdultPrice, ChildrenPrice, RoomDescription, RoomImage } = req.body;
   const branch = await branchCollection.findOne({ _id: branchId });
 
   // Tạo một đối tượng phòng mới
   const newRoom = {
     RoomNumber,
     RoomType,
+    DefaultQty,
     Capacity,
     RoomPrice,
+    AdultPrice,
+    ChildrenPrice,
     RoomBranch: branch.BranchCode,
     RoomDescription,
-    RoomStatus,
     DateCreated: date_created,
+    BookedDateRanges:[],
     RoomImage
   };
 
@@ -314,16 +550,17 @@ app.put("/branches/:branchId/rooms/:roomId", cors(), async (req, res) => {
   }
 
   // Cập nhật thông tin phòng với các thuộc tính mới
-  const { RoomNumber, RoomType, Capacity, RoomPrice, RoomDescription, RoomStatus, RoomImage, RoomBranch } = req.body;
+  const { RoomNumber, RoomType, Capacity, RoomPrice, AdultPrice, ChildrenPrice, RoomDescription, RoomImage, RoomBranch } = req.body;
   const updatedRoom = {
     ...room,
     RoomNumber,
     RoomType,
     Capacity,
     RoomPrice,
+    AdultPrice,
+    ChildrenPrice,
     RoomBranch,
     RoomDescription,
-    RoomStatus,
     RoomImage,
   };
 
@@ -382,14 +619,83 @@ app.get("/users",cors(),async(req, res)=>{
   res.send(accounts)
 })
 
-// app.get("/users/user-detail",cors(),async(req, res)=>{
-//   const accountID = new ObjectId(req.body._id);
+// app.post("/users/user-detail",cors(),async(req, res)=>{
+//   const accountID = new ObjectId(req.body.accountId);
 //   accountCollection = database.collection("Account")
 //   const account = await accountCollection.findOne({_id:accountID});
 //   res.send(account)
 // })
+// app.post("/users/user-detail",cors(),async(req, res)=>{
+//   let query = {};
+//   if(req.body.accountId) {
+//     query = {_id:new ObjectId(req.body.accountId)};
+//   } else if(req.body.accountName) {
+//     query = {accountName:req.body.accountName};
+//   } else if(req.body.phoneNumber) {
+//     query = {phoneNumber:req.body.phoneNumber};
+//   }
 
-app.post("/register",cors(),async(req,res)=>{
+//   accountCollection = database.collection("Account")
+//   const account = await accountCollection.findOne(query);
+//   res.send(account)
+// })
+app.post("/users/user-detail",cors(),async(req, res)=>{
+  let query = req.body.infoAccount;
+  accountCollection = database.collection("Account");
+
+  const searchFields = ["_id", "AccountName", "PhoneNumber"];
+  let account = null;
+
+  for(let i = 0; i < searchFields.length; i++) {
+    const searchField = searchFields[i];
+    let searchQuery;
+    if (searchField === '_id') {
+      try {
+        searchQuery = {[searchField]: new ObjectId(query)};
+      } catch (err) {
+        continue;
+      }
+    } else {
+      searchQuery = {[searchField]: query};
+    }
+    account = await accountCollection.findOne(searchQuery);
+    if(account) {
+      break;
+    }
+  }
+
+  if (query==null) {
+    return res.status(404).send({ error: "Account not found!" });
+  }
+
+  res.send(account);
+})
+
+
+app.post("/users/check-register",cors(),async(req,res)=>{
+  try {
+    accountCollection = database.collection("Account")
+    account=req.body
+
+    const existingAccount = await accountCollection.findOne({ AccountName: account.AccountName });
+    if (existingAccount) {
+      res.status(400).send({ message: "AccountName already exists" });
+      return;
+    }
+
+    if(account.Password !== account.ConfirmPassword){
+      res.status(400).send({ message: "Passwords do not match" });
+      return;
+    }
+
+    res.send(req.body)
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+})
+
+app.post("/users/register",cors(),async(req,res)=>{
   try {
     var crypto = require('crypto')
     salt = crypto.randomBytes(16).toString('hex')
@@ -438,7 +744,7 @@ app.post("/register",cors(),async(req,res)=>{
   }
 })
 
-app.post("/login",cors(),async (req,res)=>{
+app.post("/users/login",cors(),async (req,res)=>{
   try {
     AccountName=req.body.AccountName
     Password=req.body.Password
@@ -448,7 +754,7 @@ app.post("/login",cors(),async (req,res)=>{
     accountCollection = database.collection("Account")
     account = await accountCollection.findOne({AccountName:AccountName})
     if(account==null){
-      res.send({"AccountName":AccountName,"message":"Account not exist"})
+      res.send({"AccountName":AccountName,"message":"Account: " + AccountName + " not exist"})
     } else if(!account.Valid){
       res.status(400).send({ message: "Account is not valid" });
       return;
@@ -465,6 +771,42 @@ app.post("/login",cors(),async (req,res)=>{
     res.status(500).send("Internal Server Error");
   }
 })
+
+app.patch('/users/update-account', cors(), async (req, res) => {
+  const { accountID, Password, FullName, PhoneNumber, DOB, Avatar } = req.body;
+
+  // Find the account in the database
+  const accountCollection = database.collection('Account');
+  const account = await accountCollection.findOne({ _id: new ObjectId(accountID) });
+
+  // Check if the account exists
+  if (!account) {
+    res.status(400).send({ message: 'Account not found' });
+    return;
+  }
+
+  // Check if the current password is correct
+  if (Password) {
+    const crypto = require('crypto');
+    const hash = crypto.pbkdf2Sync(Password, account.salt, 1000, 64, 'sha512').toString('hex');
+    if (hash !== account.Password) {
+      res.status(400).send({ message: 'Incorrect password' });
+      return;
+    }
+  }
+
+  const infoUpdate = {
+    FullName: FullName || account.FullName,
+    PhoneNumber: PhoneNumber || account.PhoneNumber,
+    DOB: DOB || account.DOB,
+    Avatar: Avatar || account.Avatar
+  }
+
+  // Update the account in the database
+  await accountCollection.updateOne({ _id: new ObjectId(accountID) }, { $set: infoUpdate });
+
+  res.send({ message: 'Account updated successfully' });
+});
 
 app.patch('/users/change-password', cors(), async (req, res) => {
   try {
@@ -485,11 +827,13 @@ app.patch('/users/change-password', cors(), async (req, res) => {
 
     // Check if the current password is correct
     const crypto = require('crypto');
-    const hash = crypto.pbkdf2Sync(currentPassword, account.salt, 1000, 64, 'sha512').toString('hex');
-    if (hash !== account.Password) {
-      res.status(400).send({ message: 'Incorrect current password' });
-      return;
-    }
+    if (currentPassword) {
+      const hash = crypto.pbkdf2Sync(currentPassword, account.salt, 1000, 64, 'sha512').toString('hex');
+      if(hash !== account.Password){
+        res.status(400).send({ message: 'Incorrect current password' });
+        return;
+      }
+    }    
 
     // Update the password in the database
     const newSalt = crypto.randomBytes(16).toString('hex');
@@ -502,124 +846,6 @@ app.patch('/users/change-password', cors(), async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-app.put('/users/lock-account', cors(), async (req, res) => {
-  try {
-    const accountName = req.body.AccountName;
-    // const adminAccountName = req.body.AdminAccountName;
-    const adminPassword = req.body.AdminPassword;
-
-    // Check if the admin credentials are correct
-    const adminCollection = database.collection('Account');
-    const adminAccount = await adminCollection.findOne({ Type: 'Admin' });
-
-    if (!adminAccount) {
-      res.status(400).send({ message: 'Invalid admin credentials' });
-      return;
-    }
-
-    const crypto = require('crypto');
-    const hash = crypto.pbkdf2Sync(adminPassword, adminAccount.salt, 1000, 64, 'sha512').toString('hex');
-    if (hash !== adminAccount.Password) {
-      res.status(400).send({ message: 'Incorrect password' });
-      return;
-    }
-
-    // Find the account in the database
-    const accountCollection = database.collection('Account');
-    const account = await accountCollection.findOne({ AccountName: accountName });
-
-    if (!account) {
-      res.status(400).send({ message: 'Account not found' });
-      return;
-    }
-
-    // Update the account in the database
-    await accountCollection.updateOne({ AccountName: accountName }, { $set: { Valid: false } });
-
-    res.send({ message: 'Account locked successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-});
-
-app.put('/users/unlock-account', cors(), async (req, res) => {
-  try {
-    const accountName = req.body.AccountName;
-    const adminPassword = req.body.AdminPassword;
-
-    // Check if the admin credentials are correct
-    const adminCollection = database.collection('Account');
-    const adminAccount = await adminCollection.findOne({ Type: 'Admin' });
-
-    if (!adminAccount) {
-      res.status(400).send({ message: 'Invalid admin credentials' });
-      return;
-    }
-
-    const crypto = require('crypto');
-    const hash = crypto.pbkdf2Sync(adminPassword, adminAccount.salt, 1000, 64, 'sha512').toString('hex');
-    if (hash !== adminAccount.Password) {
-      res.status(400).send({ message: 'Invalid admin credentials' });
-      return;
-    }
-
-    // Find the account in the database
-    const accountCollection = database.collection('Account');
-    const account = await accountCollection.findOne({ AccountName: accountName });
-
-    if (!account) {
-      res.status(400).send({ message: 'Account not found' });
-      return;
-    }
-
-    // Update the account in the database
-    await accountCollection.updateOne({ AccountName: accountName }, { $set: { Valid: true } });
-
-    res.send({ message: 'Account unlocked successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-});
-
-app.put('/users/lock-or-unlock-account', cors(), async (req, res) => {
-  const accountName = req.body.AccountName;
-  const adminPassword = req.body.AdminPassword;
-  const valid = req.body.Valid;
-
-  // Check if the admin credentials are correct
-  const adminCollection = database.collection('Account');
-  const adminAccount = await adminCollection.findOne({ Type: 'Admin' });
-
-  if (!adminAccount) {
-    res.status(400).send({ message: 'Invalid admin credentials' });
-    return;
-  }
-
-  const crypto = require('crypto');
-  const hash = crypto.pbkdf2Sync(adminPassword, adminAccount.salt, 1000, 64, 'sha512').toString('hex');
-
-  if (hash !== adminAccount.Password) {
-    res.status(400).send({ message: 'Incorrect password' });
-    return;
-  }
-
-  // Find the account in the database
-  const accountCollection = database.collection('Account');
-  const account = await accountCollection.findOne({ AccountName: accountName });
-
-  if (!account) {
-    res.status(400).send({ message: 'Account not found' });
-    return;
-  }
-
-  // Update the account in the database
-  const updateResult = await accountCollection.updateOne({ AccountName: accountName }, { $set: { Valid: valid } });
-
-  res.send({ message: `Account ${valid ? 'unlocked' : 'locked'} successfully` });
-})
 
 app.put('/users/lock-or-unlock-accounts', cors(), async (req, res) => {
   const accountNames = req.body.AccountNames;

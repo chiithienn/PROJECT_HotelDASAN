@@ -1,0 +1,82 @@
+<div class="container-detail" *ngIf="user">
+  <div class="avatar">
+    <img src="{{user?.Avatar ? user?.Avatar : 'assets/images/account.png'}}" alt="">
+    <div>
+      <!-- <label class="label" for="FullName">Full Name</label> -->
+      <p><strong>{{user?.FullName}}</strong></p>
+    </div>
+    <hr>
+    <div class="container-btn">
+      <input type="button" class="form-control" name="" id="" value="Personal Page" (click)="openPersonalPage()">
+      <input type="button" class="form-control" name="" id="" value="Cart" (click)="openCartPage()">
+      <input type="button" class="form-control" name="" id="" value="Order" (click)="openOrderPage()">
+      <input type="button" class="form-control" name="" id="" value="Logout" (click)="logout()">
+    </div>
+  </div>
+
+  <div class="container-cart" *ngIf="user && orders">
+    <h3 class="text-center text-white bg-dark p-3">Your Order</h3>
+    <div class="container">
+      <table class="table table -hover">
+        <thead>
+          <tr>
+            <th>Index</th>
+            <td>Order Code</td>
+            <th>Date Created</th>
+            <th>Total Price</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders ;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{order?._id}}</td>
+            <td>{{order?.DateCreated}}</td>
+            <td>{{order?.TotalPrice}}</td>
+            <td>
+              <button (click)="viewModalDetail(order)">View Detail</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ORDER DETAIL -->
+<div class="modal-bg" *ngIf="showModalDetail">
+  <div class="modal-content container-detail">
+    <div class="exit" title="Thoát" (click)="closeDetail()">Exit</div>
+    <h3 class="text-center text-white bg-dark p-3">Detail Order</h3>
+    <div class="container">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th>Room Name</th>
+            <th>Adult</th>
+            <th>Children</th>
+            <th>Price</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Branch</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let orderDetail of orderSelected?.OrderDetails; let i=index">
+            <td>{{i+1}}</td>
+            <td>{{orderDetail?.RoomType}}</td>
+            <td>{{orderDetail?.Adults}}</td>
+            <td>{{orderDetail?.Children}}</td>
+            <td>{{orderDetail?.Price}}</td>
+            <td>{{orderDetail?.CheckInDate}}</td>
+            <td>{{orderDetail?.CheckOutDate}}</td>
+            <td>{{orderDetail?.Branch}}</td>
+            <td>{{orderDetail?.TotalLine}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

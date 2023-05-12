@@ -7,7 +7,7 @@
 
 <div class="container-detail">
   <div class="avatar">
-    <input class="form-control" type="image" src="{{account.Avatar}}" [title]="(account.FullName==gojo) ? '天上天下唯我独尊' : ''">
+    <input class="form-control" type="image" src="{{account?.Avatar}}" [title]="(account?.FullName==gojo) ? '天上天下唯我独尊' : ''">
     <div>
       <label class="label" for="FullName">Full Name</label>
       <input type="text" class="form-control" #FullName="ngModel" name="FullName" id="FullName" [(ngModel)]="account.FullName" readonly>
@@ -36,28 +36,29 @@
         <label class="label" for="AccountName">Account Name</label>
         <input type="text" class="form-control" #AccountName="ngModel" name="AccountName" id="AccountName" [(ngModel)]="account.AccountName" readonly>
       </td>
-      <td>
-        <label class="label" for="Email">Email</label>
-        <input type="text" class="form-control" #Email="ngModel" name="Email" id="Email" [(ngModel)]="account.Email" readonly>
-      </td>
-    </tr>
-    <!-- 2 -->
-    <!-- 3 -->
-    <tr>
-      <td rowspan="2">
-        <label class="label" for="Password">Password</label>
-        <textarea class="form-control" name="Password" id="Password" cols="30" rows="5" [(ngModel)]="account.Password" readonly></textarea>
-      </td>
-      <td>
-        <label class="label" for="IDCard">IDCard</label>
-        <input type="text" class="form-control" #IDCard="ngModel" name="IDCard" id="IDCard" [(ngModel)]="account.IDCard" readonly>
-      </td>
-    </tr>
-    <tr>
       <td class="no-pad-right">
         <label class="label" for="Valid">Valid</label>
         <input type="text" class="form-control" #Valid="ngModel" name="Valid" id="Valid" [(ngModel)]="account.Valid" readonly>
       </td>
+      <!-- <td>
+        <label class="label" for="Email">Email</label>
+        <input type="text" class="form-control" #Email="ngModel" name="Email" id="Email" [(ngModel)]="account.Email" readonly>
+      </td> -->
+    </tr>
+    <!-- 2 -->
+    <!-- 3 -->
+    <tr>
+      <!-- <td rowspan="2">
+        <label class="label" for="Password">Password</label>
+        <textarea class="form-control" name="Password" id="Password" cols="30" rows="5" [(ngModel)]="account.Password" readonly></textarea>
+      </td> -->
+      <!-- <td>
+        <label class="label" for="IDCard">IDCard</label>
+        <input type="text" class="form-control" #IDCard="ngModel" name="IDCard" id="IDCard" [(ngModel)]="account.IDCard" readonly>
+      </td> -->
+    </tr>
+    <tr>
+
     </tr>
     <!-- 3 -->
     <!-- 4 -->

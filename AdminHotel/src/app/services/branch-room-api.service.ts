@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, retry, throwError } from 'rxjs';
-import { IRoom, IBranch, IBranches } from '../interface/BranchRoom';
+import { IRoom, IBranches } from '../interface/BranchRoom';
 import { RoomHotel } from '../model/BranchRoom';
 
 @Injectable({
@@ -47,7 +47,7 @@ export class BranchRoomAPIService {
       responseType:"text"
     }
     return this._http.get<any>("/branches/"+branchID+"/rooms/"+roomID,requestOptions).pipe(
-      map(res=>JSON.parse(res) as IBranches),
+      map(res=>JSON.parse(res) as IRoom),
       retry(3),
       catchError(this.handleError)
     )

@@ -14,15 +14,13 @@ export class DetailRoomComponent implements OnInit {
   room:any
   errMessage:string=''
   close:boolean=true
-  status=''
 
   constructor(private _service:BranchRoomAPIService){}
 
   ngOnInit(): void {
     this._service.getRoom(this.selectedBranchID,this.selectedRoomID).subscribe({
       next:(data)=>{
-        this.room=data,
-        this.status = this.room.RoomStatus ? 'Not Booked' : 'Booked';
+        this.room=data
       },
       error:(err)=>{this.errMessage=err.message}
     })

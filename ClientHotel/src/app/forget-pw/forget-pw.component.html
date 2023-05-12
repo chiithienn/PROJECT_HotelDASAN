@@ -1,19 +1,116 @@
-<body>
-<div class="sign_in">
-  <a href="./index.html"><img class="logo" src="/assets/images/dasan.png" /></a>
-  <input id="box" type="submit" value="Sign in" />
-  <input id="box" type="password" placeholder="Password" />
-  <input id="box" type="text" placeholder="Email or phone number" />
-</div>
-<div class="find_pw">
-  <h2>Find your account</h2>
-  <hr />
-  <p>Please fill in your email or phone number to find your account.</p>
-  <input type="text" required placeholder="Email or phone number" />
-  <hr />
-  <div class="button">
-    <a href="./SIGNIN.html"><button class="cancel">Cancel</button></a>
-    <button class="continue">Continue</button>
+<div class="body">
+  <div class="sign_in">
+    <!-- <a href="./index.html"><img class="logo" src="/assets/images/dasan.png" /></a> -->
+    <!-- <input id="box" type="submit" value="Sign in" />
+    <input id="box" type="password" placeholder="Password" />
+    <input id="box" type="text" placeholder="Email" /> -->
+  </div>
+  <div class="find_pw">
+    <h2>Find your account</h2>
+    <hr />
+    <p>Please fill in your email or phone number to find your account.</p>
+    <input type="text" required placeholder="Email or phone number" [(ngModel)]="infoToFind"/>
+    <hr />
+    <div class="button">
+      <a href="/sign-in"><button class="cancel">Cancel</button></a>
+      <button class="continue" (click)="findAccount()">Continue</button>
+    </div>
+  </div>
+
+  <div *ngIf="showConfirmAccount" class="modal-bg">
+    <div class="modal-content container-lock-p">
+      <table class="container-confirm">
+        <tr>
+          <th>
+            <h3>THIS IS YOUR ACCOUNT?</h3>
+          </th>
+        </tr>
+        <tr>
+          <td class="avatar">
+            <img src="{{user?.Avatar ? user?.Avatar : 'assets/images/account.png'}}" width="300px" alt="">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="Email">Email</label>
+            <input type="email" class="form-control" name="Email" id="Email" [(ngModel)]="user.AccountName" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="Name">Name</label>
+            <input type="text" class="form-control" name="Name" id="Name" [(ngModel)]="user.FullName" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td class="container-btn">
+            <button (click)="confirmAccount()">Confirm</button>
+            <button (click)="closeModalConfirm()">Cancel</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="dataLoaded" class="modal-bg more-opacity">
+    <div class="loader"></div>
+  </div>
+  <div *ngIf="showConfirmCode" class="modal-bg more-opacity">
+    <div class="modal-content container-lock-p">
+      <table class="container-confirm">
+        <tr>
+          <td class="note" *ngIf="countdown>0 && incorrectStatus==false">
+            The code has been sent to your email. It will be available within a minute. Please enter the code before it is no longer available!
+          </td>
+          <td class="note text-danger" *ngIf="!(countdown>0) && incorrectStatus==false">
+            The code acceptance timeout has expired. If the code has not been sent, please click Re-send!
+          </td>
+          <td class="note text-danger" *ngIf="incorrectStatus">
+            Your code is not correct. Please click Re-send to receive a new code!
+          </td>
+        </tr>
+        <tr>
+          <td class="note">
+            <p *ngIf="countdown>0 && incorrectStatus==false">{{ countdown }}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" class="form-control" name="Code" id="Code" [(ngModel)]="code" placeholder="Enter code">
+          </td>
+        </tr>
+        <tr>
+          <td class="container-btn">
+            <button (click)="confirmCode()" [disabled]="!(countdown>0)">Confirm</button>
+            <button (click)="reSendCode()">Re-send</button>
+            <button (click)="cancelConfirm()">Cancel</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--  -->
+  <div *ngIf="showChangePW" class="modal-bg">
+    <div class="modal-content container-lock-p">
+      <table class="container-confirm">
+        <tr>
+          <td>
+            <label for="NewPassword">New Password</label>
+            <input type="password" class="form-control" name="NewPassword" id="NewPassword" [(ngModel)]="newPW" placeholder="Enter New Password">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="ConfirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" name="ConfirmPassword" id="ConfirmPassword" [(ngModel)]="confirmPW" placeholder="Enter Confirm Password">
+          </td>
+        </tr>
+        <tr>
+          <td class="container-btn">
+            <button (click)="changePW()">Update</button>
+            <button (click)="cancelConfirm()">Cancel</button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
-</body>

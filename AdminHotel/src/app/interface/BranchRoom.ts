@@ -6,12 +6,12 @@ export interface IBranches{
   HotelRoom:Array<IRoom>
 }
 
-export interface IBranch{
-  _id:any,
-  BranchName:string,
-  HotelName:string,
-  BranchCode:string
-}
+// export interface IBranch{
+//   _id:any,
+//   BranchName:string,
+//   HotelName:string,
+//   BranchCode:string
+// }
 
 export interface IRoom{
   _id:any,
@@ -24,7 +24,7 @@ export interface IRoom{
   ChildrenPrice:number,
   RoomBranch:string,
   RoomDescription:string,
-  RoomStatus:boolean,
+  RoomStatuzs:boolean,
   DateCreated:string,
   RoomImage:string,
 }

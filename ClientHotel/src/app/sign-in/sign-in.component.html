@@ -2,36 +2,38 @@
   <div>
     <div class="container">
       <form class="box">
-        <a href="./index.html"><h1>Dasan Hotel</h1></a>
+        <a href="./home-page"><h1>Dasan Hotel</h1></a>
         <h5>Sign in to your account.</h5>
         <input
-          id="input"
+          id="email"
           type="email"
           name="email"
-          placeholder="Email or phone number"
+          [(ngModel)]="accountName"
+          placeholder="Email"
           autocomplete="off"
-          required=""
+          required
         />
         <input
-          id="input"
+          id="password"
           type="password"
           name="password"
+          [(ngModel)]="password"
           placeholder="Password"
           autocomplete="off"
-          required=""
+          required
         />
         <label>
-          <input type="checkbox" /><span></span>
+          <input type="checkbox" [(ngModel)]="rmbAccount" [checked]="rmbAccount" (click)="changeRmb()"/><span></span>
           <small class="rmb">Remember me</small>
         </label>
-        <a href="./FORGETPW.html" class="forgetpass"
+        <a href="./forget-password" class="forgetpass"
           ><small>Forget password?</small></a
         >
-        <input type="submit" value="Sign in" class="btn1" />
+        <input type="submit" value="Sign in" class="btn1" (click)="login()"/>
       </form>
-      <span class="signup"
+      <span class="signup" [routerLink]="'/sign-up'"
         >Don't have an account?
-        <a href="./SIGNUP.html"><b>Sign up</b></a></span
+        <a><b>Sign up</b></a></span
       >
     </div>
   </div>

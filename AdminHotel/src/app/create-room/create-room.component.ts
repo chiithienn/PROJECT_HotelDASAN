@@ -13,6 +13,7 @@ export class CreateRoomComponent implements OnInit {
 
   room = new RoomHotel()
   branch:any
+  branchName = '';
   errMessage:string=''
   close=true
   booked=false
@@ -24,7 +25,10 @@ export class CreateRoomComponent implements OnInit {
 
   ngOnInit(): void {
     this._service.getBranch(this.selectedBranchID).subscribe({
-      next: (data) => {this.branch=data},
+      next: (data) => {
+        this.branch=data,
+        this.branchName = data.BranchName;
+      },
       error: (err) => {this.errMessage=err.message}
     })
   }

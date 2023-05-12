@@ -14,7 +14,6 @@ export class OrderDetail{
     public Branch:string='',
     public RoomType:string='',
     public Price:number=0,
-    public RoomQuantity:number=1,
     public Adults:number=1,
     public Children:number=0,
     public CheckInDate:string='',

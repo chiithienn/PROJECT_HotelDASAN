@@ -4,7 +4,6 @@ export interface IOrderDetail{
   Branch:string,
   RoomType:string,
   Price:number,
-  RoomQuantity:number,
   Adults:number,
   Children:number,
   CheckInDate:string,

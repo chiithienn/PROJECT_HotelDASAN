@@ -1,0 +1,413 @@
+<div class="container-loader" *ngIf="showLoad">
+  <div class="loader"></div>
+</div>
+
+<!-- BRANCH -->
+<ng-container *ngFor="let branch of branches">
+  <div class="container-main-page" *ngIf="selectedBranch === branch.BranchName">
+    <section class="home" id="home" [ngStyle]="{'background-image': 'url(' + branch.BranchImage + ')'}">
+      <div class="container">
+        <h1>{{branch.BranchName}}</h1>
+        <p>Enjoy your vacation</p>
+
+        <div class="content grid">
+          <div class="box">
+            <span>CHECKIN DATE </span> <br />
+            <input type="date" class="form-control" name="CheckInDate" id="CheckInDate" #CheckInDate="ngModel" [(ngModel)]="checkInDate" (change)="onChange()"/>
+          </div>
+          <div class="box">
+            <span>CHECKOUT DATE </span> <br />
+            <input type="date" class="form-control" name="CheckOutDate" id="CheckOutDate" #CheckOutDate="ngModel" [(ngModel)]="checkOutDate" (change)="onChange()"/>
+          </div>
+          <div class="box">
+            <span>ADULTS</span> <br />
+            <select class="form-select" name="Adults" id="Adults" [(ngModel)]="selectedAdults" (change)="onChange()">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+          <div class="box">
+            <span>CHILDREN </span> <br />
+            <select class="form-select" name="Children" id="Children" [(ngModel)]="selectedChildren" (change)="onChange()">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div class="box">
+            <span>BRANCH </span> <br />
+            <select class="form-select" id="branchBooking" [(ngModel)]="selectedBranch" (change)="changeBranch(selectedBranch, branch.BranchCode)">
+              <option *ngFor="let branch of branches" [value]="branch.BranchName">{{branch.BranchName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="rooms" id="rooms">
+      <div class="container">
+        <div class="heading">
+          <h1>OUR ROOMS</h1>
+        </div>
+        <div class="background">
+          <div class="content grid2 mtop">
+            <ng-container *ngFor="let room of abranch?.HotelRoom">
+              <div class="box flex">
+                <div class="left">
+                  <img src="{{room.RoomImage}}" alt="" />
+                </div>
+                <div class="right">
+                  <h2>{{room.RoomType}} - {{room.RoomNumber}}</h2>
+                  <div class="rate flex">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+
+                  <p>{{room.RoomDescription}}</p>
+                  <h5>From {{room.RoomPrice.toLocaleString('vi-VN')}} VND/night</h5>
+                  <button class="flex1" (click)="popUp(branch._id, room.RoomType)">
+                    <span>Book Now &nbsp;</span>
+                    <i class="fas fa-arrow-circle-right"></i>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-container>
+
+<!-- MODAL BOOKING ROOM -->
+<div class="modal-bg" *ngIf="showModal">
+  <div class="modal-content">
+    <div class="title-function">
+      <h3>BOOKING ROOM</h3>
+    </div>
+    <div class="exit" title="Thoát" (click)="closeModal()">Exit</div>
+    {{errMessage}}
+    <!--  -->
+    <table class="infoCreateOrder">
+      <tr>
+        <!-- Column 1 -->
+        <td>
+          <!-- Element 1 -->
+          <table class="infoRoom">
+            <tr>
+              <td class="infoRoom-image">
+                <img src="{{roomSelected?.RoomImage}}" alt="" width="350px" height="270px">
+              </td>
+              <td class="infoRoom-content" colspan="2">
+                <h5><strong>{{roomSelected?.RoomType}} - {{roomSelected?.RoomNumber}}</strong></h5>
+                <p class="bed-qty">
+                  <img src="../assets/images/icon-bed.png" alt="" width="15px" height="auto">&nbsp;
+                  <span *ngIf="roomSelected?.Capacity<=4">2 giường đơn</span>
+                  <span *ngIf="roomSelected?.Capacity>4">3 giường đơn</span>
+                </p>
+                <p class="utilities">
+                  <img src="../assets/images/icon-cabinet.png" alt="" width="15px" height="auto">
+                  <img src="../assets/images/icon-bedsheets.png" alt="" width="15px" height="auto">
+                  <img src="../assets/images/icon-nosmoking.png" alt="" width="15px" height="auto">
+                  <span (click)="viewFacilities()">Xem tất cả tiện nghi</span>
+                </p>
+                <div class="container-price-qty">
+                  <p>
+                    Giá chỉ từ<br>
+                    <strong>{{roomSelected?.RoomPrice.toLocaleString('vi-VN')}}</strong> VNĐ / night
+                  </p>
+                </div>
+              </td>
+            </tr>
+            <tr><td colspan="3"><hr></td></tr>
+            <tr>
+              <td>
+                <p>
+                  <img src="../assets/images/icon-breakfast.png" alt="" width="15px">&nbsp;
+                  Đã bao gồm đồ ăn sáng
+                </p>
+                <p>
+                  <img src="../assets/images/icon-no-refund.png" alt="" width="15px">&nbsp;
+                  Không hoàn trả phí khi huỷ phòng
+                </p>
+                <span class="view-detail" (click)="viewTerm()">Xem chi tiết ></span>
+              </td>
+              <td>
+                <div>
+                  <img src="{{'../assets/images/icon-'+roomSelected?.DefaultQty+'-people.png'}}" alt=""><br>
+                  <span>Defaul {{roomSelected?.DefaultQty}} people</span>
+                </div>
+              </td>
+              <td>
+                <img src="{{'../assets/images/icon-'+roomSelected?.Capacity+'-people.png'}}" alt=""><br>
+                <span>Capacity {{roomSelected?.Capacity}} people</span>
+              </td>
+            </tr>
+          </table>
+
+          <hr>
+
+          <!-- Element 2 -->
+          <!-- *ngFor="let i of getRange(selectedRoomQuantity)" -->
+          <form action="" class="infoCustomer" >
+            <table>
+              <tr>
+                <!-- <td>Chọn số người phòng {{i}}</td> -->
+                <td>
+                  <label for="Adults"><strong>Adults</strong></label>
+                  <select class="form-select" name="Adults" id="Adults" [(ngModel)]="roomSelected.Adults" (change)="changeNumPeople()">
+                    <option *ngFor="let option of adultsOptions" [value]="option"
+                    [ngClass]="(option+(+roomSelected?.Children) > roomSelected?.Capacity) ? 'text-danger' : ''"
+                    [title]="(option+(+roomSelected?.Children) > roomSelected?.Capacity) ? 'Unable to select due to exceeding the specified capacity' : ''"
+                    [disabled]="option+(+roomSelected?.Children) > roomSelected?.Capacity"
+                    >
+                      {{ option }}
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <label for="Children"><strong>Children</strong></label>
+                  <select class="form-select" name="Children" id="Children" [(ngModel)]="roomSelected.Children" (change)="changeNumPeople()">
+                    <option *ngFor="let option of childrenOptions" [value]="option"
+                      [ngClass]="(option+(+roomSelected?.Adults) > roomSelected?.Capacity) ? 'text-danger' : ''"
+                      [title]="(option+(+roomSelected?.Adults) > roomSelected?.Capacity) ? 'Unable to select due to exceeding the specified capacity' : ''"
+                      [disabled]="option+(+roomSelected?.Adults) > roomSelected?.Capacity"
+                    >
+                      {{ option }}
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <button type="button" class="" (click)="addToCart()">Add to cart</button>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </td>
+
+        <!-- Column 2 -->
+        <td class="infoBill">
+          <div class="container-infoBill-content">
+            <h5>Thông tin đặt phòng</h5>
+            <hr>
+
+            <h6>{{abranch.HotelName}} Hotel - {{abranch.BranchName}} Centre</h6>
+            <h6>{{checkInDate|date:'dd/MM/yyyy'}} - {{checkOutDate|date:'dd/MM/yyyy'}}</h6>
+            <hr class="dot">
+
+            <h6>
+              Thông tin phòng
+              <button *ngIf="showCartDetail" (click)="showCartDetail = !showCartDetail">Close</button>
+              <button *ngIf="!showCartDetail" (click)="showCartDetail = !showCartDetail">Open</button>
+            </h6>
+            <div *ngIf="showCartDetail">
+              <div class="infoDetailOrder" *ngFor="let cartDetail of cart?.CartDetails; let i=index">
+                <ng-container *ngIf="cartDetail">
+                  <p>
+                    <strong>Phòng {{i+1}}:</strong> {{cartDetail?.RoomType}}<br>
+                    {{cartDetail?.Adults}} Adult - {{cartDetail?.Children}} Children
+                  </p>
+                  <p>
+                    <strong>{{cartDetail?.Price?.toLocaleString('vi-VN')}} VNĐ/night</strong>
+                    <button (click)="deleteCartDetail(cartDetail?._id)">Cancel</button>
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <hr>
+
+            <div class="total">
+              <h6>Tổng cộng</h6>
+              <h6><strong>{{cart?.TotalPrice ? cart?.TotalPrice : '0'}}</strong>&nbsp;&nbsp; VNĐ</h6>
+            </div>
+            <button type="button" class="btn btn-booking" (click)="bookRoom(cart._id)">BOOK NOW</button>
+          </div>
+        </td>
+      </tr>
+      <tr></tr>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL FACILITIES -->
+<div class="modal-bg" *ngIf="showModalFacilities">
+  <div class="modal-content container-facilities">
+    <div class="exit" title="Thoát" (click)="closeModalFacilities()">Exit</div>
+    <table>
+      <tr>
+        <td>
+          <img src="{{roomSelected?.RoomImage}}" alt="" width="370px" height="250px">
+        </td>
+        <td>
+          <h2>{{roomSelected?.RoomType}} - {{roomSelected?.RoomNumber}}</h2>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-bed.png" alt="" width="15px" height="auto">&nbsp;
+            <span *ngIf="roomSelected?.Capacity<=4">2 giường đơn</span>
+            <span *ngIf="roomSelected?.Capacity>4">3 giường đơn</span>
+          </p>
+          <p *ngIf="roomSelected?.Capacity<=4">
+            Two king size beds, full of furniture, bring the most comfort possible vacation, family fun as well as long-term business trips.
+          </p>
+          <p *ngIf="roomSelected?.Capacity>4">
+            Three king size beds, full of furniture, bring the most comfort to go with groups of friends, family to have fun as well as long-term business trips with colleagues.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          View all amenities:
+        </th>
+      </tr>
+      <tr *ngIf="roomSelected?.Capacity<=4">
+        <td>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-cabinet.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Tủ quần áo</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-nosmoking.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Phòng không hút thuốc</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-bedsheets.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Ga trải giường, gối</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-shower-on.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Vòi sen</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-desk-lamp.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Đèn bàn</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-telephone.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Điện thoại</span>
+          </p>
+        </td>
+        <td>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-wifi.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Wifi</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-external-desk.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Bàn làm việc</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-bank-safe.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Két sắt an toàn</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-laundry-cleaning.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Dịch vụ giặt, ủi</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-bar-mini.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Quầy bar mini</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-towel.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Khăn tắm</span>
+          </p>
+        </td>
+      </tr>
+      <tr *ngIf="roomSelected?.Capacity>4">
+        <td>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-cabinet.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Tủ quần áo</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-nosmoking.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Phòng không hút thuốc</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-bedsheets.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Ga trải giường, gối</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-shower-on.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Vòi sen</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-desk-lamp.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Đèn bàn</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-telephone.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Điện thoại</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-candles.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Nến thơm</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-netflix.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Netflix and Chill</span>
+          </p>
+        </td>
+        <td>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-wifi.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Wifi</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-external-desk.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Bàn làm việc</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-bank-safe.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Két sắt an toàn</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-laundry-cleaning.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Dịch vụ giặt, ủi</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-bar-mini.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Quầy bar mini</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-towel.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Khăn tắm</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-taking-bath.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Bồn tắm</span>
+          </p>
+          <p class="bed-qty">
+            <img src="../assets/images/icon-hair-dryer.png" alt="" width="15px" height="auto">&nbsp;
+            <span>Máy sấy tóc</span>
+          </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL TERM -->
+<div class="modal-bg" *ngIf="showModalTerm">
+  <div class="modal-content container-facilities">
+    <div class="exit" title="Thoát" (click)="closeModalTerm()">Exit</div>
+    <h3>{{'Phòng ' +roomSelected?.RoomType+' chi nhánh '+abranch?.BranchName | uppercase}}</h3>
+    <hr>
+    <p><strong>Chính sách huỷ phòng của DASAN</strong></p>
+    <p>Không hoàn trả chi phí khi huỷ hoặc không đến.</p>
+    <p><strong>Đặt phòng & thanh toán</strong></p>
+    <p>Yêu cầu đăng nhập để được thực hiện đặt phòng và thanh toán. Chỉ nhận đặt phòng online trước trên website của chúng tôi và chỉ chấp nhận thanh toán online</p>
+    <p><strong>Nhận phòng:</strong> 14:00</p>
+    <p><strong>Trả phòng:</strong> 12:00</p>
+    <p><strong>Phụ thu người lớn:</strong> {{roomSelected?.AdultPrice.toLocaleString('vi-VN')}} VNĐ/night</p>
+    <p><strong>Phụ thu trẻ em:</strong> {{roomSelected?.ChildrenPrice.toLocaleString('vi-VN')}} VNĐ/night</p>
+  </div>
+</div>

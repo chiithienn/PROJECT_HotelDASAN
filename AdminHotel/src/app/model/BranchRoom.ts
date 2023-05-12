@@ -14,11 +14,10 @@ export class RoomHotel{
     public DefaultQty:number=2,
     public Capacity:number=2,
     public RoomPrice:number=500000,
-    public AdultPrice:number=200000,
-    public ChildrenPrice:number=100000,
+    public AdultPrice:number=0,
+    public ChildrenPrice:number=0,
     public RoomBranch:string='',
     public RoomDescription:string='',
-    public RoomStatus:boolean=true,
     public DateCreated:string='',
     public RoomImage:string=''
   ){}

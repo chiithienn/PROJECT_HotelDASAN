@@ -1,0 +1,817 @@
+html,
+body {
+  font-family: "Anek Latin";
+  scroll-behavior: smooth;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* promtion */
+.promotion {
+  display: flex;
+  justify-content: center;
+  padding-top: 150px;
+}
+.promotion img {
+  height: 500px;
+  width: 1000px;
+}
+/* .promotion img {
+  transition-property: transform, height, width;
+  transition-duration: 2s;
+}
+
+.promotion img:hover {
+  height: 30px;
+  width: 30px;
+  transform: translateX(200px) rotate(30deg);
+} */
+/*  promotion*/
+
+#slideshow {
+  overflow: hidden;
+  height: 510px;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.slide-wrapper {
+  width: 3100px;
+  animation: slide 15s ease infinite;
+}
+
+.slide {
+  float: left;
+  height: 510px;
+  width: 1000px;
+}
+
+@keyframes slide {
+  20% {
+    margin-left: 0px;
+  }
+  30% {
+    margin-left: -1000px;
+  }
+  50% {
+    margin-left: -1000px;
+  }
+  60% {
+    margin-left: -2000px;
+  }
+  80% {
+    margin-left: -2000px;
+  }
+}
+/*------------home------------*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 20px;
+}
+
+.home {
+  background-image: url('https://www.pranafm.com/wp-content/uploads/Prana-FM-hotel-fire-safety.jpg');
+  /* background-image: url('./assets/images/fernando-alvarez-rodriguez.jpg'); */
+  height: 65vh;
+  width: 100%;
+  /* background-attachment: fixed; */
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+  opacity: 0.95;
+}
+
+.home h1 {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 80px;
+  color: white;
+  padding-top: 10%;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+.home p {
+  font-size: 25px;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+.home .content {
+  text-align: left;
+  color: black;
+  margin-top: 9%;
+}
+
+.home .box {
+  background: #d9d9d9;
+  text-align: center;
+  font-weight: bold;
+  padding: 25px;
+}
+.box1 {
+  margin-top: 20px;
+}
+.box1 .flex1 {
+  cursor: pointer;
+}
+.home input,
+.home select {
+  margin-top: 10px;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+.home button {
+  background: #dfaa5b;
+  color: white;
+  margin-top: 10px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+}
+.suggest button,
+.rooms button {
+  background: #cc8c18;
+  color: white;
+  padding: 10px 50px;
+  outline: none;
+  border: none;
+  border-radius: 30px;
+}
+
+button i {
+  margin-left: 20px;
+  font-size: 25px;
+}
+
+button span {
+  margin-top: 5px;
+}
+
+/*------------home------------*/
+/*------------suggest------------*/
+.top {
+  margin-top: 50px;
+  align-items: center;
+}
+.top:last-child {
+  margin-top: 50px;
+}
+.top1 {
+  margin-top: 50px;
+  align-items: center;
+}
+.mtop {
+  margin-top: 50px;
+  align-items: center;
+}
+
+.heading {
+  margin-top: 100px;
+  height: 100px;
+  text-align: center;
+  background-color: black;
+  color: #dfaa5b;
+  letter-spacing: 3px;
+}
+.heading h1{
+  font-family: "Anek Latin";
+  font-size: 50px;
+  line-height: 100px;
+  font-weight: bold;
+}
+
+.left {
+  width: 50%;
+  float: left;
+  margin-left: 20px;
+}
+.left1 {
+  width: 50%;
+  float: left;
+  margin-left: 20px;
+}
+.right1 {
+  float: right;
+  width: 50%;
+  margin-right: 20px;
+  margin-left: 100px;
+}
+.right {
+  float: right;
+  width: 50%;
+  margin-left: 50px;
+  margin-right: 10px;
+}
+.right img{
+  box-shadow: 10px 10px black;
+}
+
+.narrower{
+  width: auto;
+}
+
+.suggest h3 {
+  font-size: 30px;
+  font-family: "Ubuntu", sans-serif;
+  color: black;
+  margin-bottom: 100px;
+  font-weight: bold;
+}
+
+.suggest .left {
+  padding: 20px;
+}
+.suggest .left1 {
+  padding: 20px;
+}
+section p {
+  line-height: 30px;
+  color: black;
+  margin-bottom: 40px;
+  font-size: 20px;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: lighter;
+}
+
+.suggest {
+  position: relative;
+  margin-bottom: 150px;
+}
+
+.suggest .right {
+  position: relative;
+}
+.suggest .right1 {
+  position: relative;
+}
+.suggest .flex1 {
+  transition-property: transform, height, width;
+  transition-duration: 2s;
+}
+.suggest img {
+  transition: 0.5s;
+}
+
+.suggest img:hover {
+  transform: translateY(-20px);
+}
+.suggest .flex1:hover,
+.rooms button:hover {
+  color: #dfaa5b;
+  background: black;
+  cursor: pointer;
+}
+.suggest a {
+  text-decoration: none;
+}
+.right img {
+  margin-right: 50px;
+}
+.suggest .right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #dfaa5b;
+  width: 75%;
+  height: 40vh;
+  z-index: -1;
+  margin: 50px;
+}
+.suggest .left1::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: black;
+  width: 30%;
+  height: 40vh;
+  z-index: -1;
+  margin: 200px;
+  margin-top: 850px;
+}
+
+/* rooms */
+.rooms .background {
+  background-color: #d9d9d9;
+}
+.rooms h1 {
+  color: black;
+  background-color: #dfaa5b;
+  margin-bottom: 0;
+  /* font-size: 35px; */
+}
+
+.rooms img {
+  margin: auto;
+  padding: auto;
+  width: 100%;
+  height: 100%;
+}
+.rooms .left {
+  padding: 50px;
+}
+.rooms .right {
+  padding: 50px;
+  margin: 50px;
+  box-shadow: 0 0 20px 3px rgb(0 0 0 / 5%);
+}
+
+.rooms .content h4 {
+  font-size: 20px;
+  color: black;
+  font-family: serif;
+}
+
+.rooms .rate i {
+  font-size: 13px;
+  color: #dfaa5b;
+  margin: 10px 10px 20px 0;
+}
+.box1 a {
+  text-decoration: none;
+  color: white;
+}
+.rooms .content h5 {
+  color: black;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.rooms .box {
+  transition: 0.5s;
+}
+.rooms a {
+  text-decoration: none;
+  color: white;
+}
+.rooms .box:hover {
+  transform: translateY(-20px);
+}
+/* form */
+.reservation .right {
+  float: right;
+  width: 40%;
+}
+.reservation .label {
+  min-width: 100px; /* hai input cach deu*/
+  font-weight: bold;
+  /*cach le ben phai*/
+  padding-right: 20px;
+  text-align: left;
+}
+.reservation h1 {
+  color: white;
+  background: black;
+  text-align: center;
+  margin-top: 10px;
+}
+.reservation .form_row {
+  display: flex;
+  margin-top: 30px;
+}
+
+.reservation .form_row:nth-child(1) {
+  margin-top: 10px;
+}
+.reservation .input {
+  background-color: white;
+  margin-left: 40px;
+  height: 20px;
+  width: 150px;
+}
+.reservation .form_row textarea {
+  width: 300px;
+  height: 200px;
+}
+/* .reservation form {
+  background-color: #dfaa5b;
+} */
+.reservation button {
+  color: black;
+  padding: 10px 20px;
+  background: #d9d9d9;
+  margin-top: 50px;
+  border-radius: 12px;
+  font-family: "Anek Latin";
+}
+.reservation button:hover {
+  color: black;
+  background: #cc8c18;
+}
+.reservation .right2 {
+  float: right;
+  margin-right: 100px;
+  padding-top: 50px;
+}
+.reservation .left2 {
+  margin-left: 100px;
+  padding-top: 50px;
+}
+
+.reservation .background {
+  background-color: #dfaa5b;
+  /* margin-top: 20px; */
+  padding-bottom: 20px;
+}
+.reservation h4 {
+  font-family: Arial, Helvetica, sans-serif;
+
+  margin: auto;
+}
+/* footer */
+
+/* responsive */
+
+/* modal */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: #C2AB87(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #c2ab87;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* BUTTON OPEN FORM BOOKING */
+.btnFormBooking {
+  margin: auto;
+  text-align: center;
+  margin: 70px auto 20px;
+}
+.btnFormBooking button {
+  cursor: pointer;
+  font-family: "Ubuntu";
+  font-weight: bold;
+  width: 250px;
+  height: 70px;
+  font-size: 30px;
+  border: 0;
+  border-radius: 7px;
+  background-color: #dfaa5b;
+  color: black;
+  box-shadow: 5px 5px;
+}
+
+/* gallery */
+.gallery .container div:nth-child(2) {
+  margin-bottom: 40px;
+}
+.container1 {
+  position: relative;
+  margin-top: 10px;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  text-shadow: 1px 1px 1px black;
+  font-weight: bold;
+  font-size: 30px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+
+/* Container for image text */
+/* .caption-container {
+  text-align: center;
+  background-color: #222;
+  padding: 2px 16px;
+  color: white;
+} */
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Six columns side by side */
+.column {
+  float: left;
+  width: 16.66%;
+}
+.column img {
+  height: 150px;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+/* For Tablet */
+@media all and (max-width: 1024px) {
+  .k1 {
+    width: 15%;
+  }
+  .k2 {
+    width: 35%;
+  }
+  .k3 {
+    width: 20%;
+  }
+  .k4 {
+    width: 30%;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .k1 {
+    width: 15%;
+  }
+  .k2 {
+    width: 35%;
+  }
+  .k3 {
+    width: 20%;
+  }
+  .k4 {
+    width: 30%;
+  }
+}
+
+/* responsive */
+@media only screen and (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 2fr);
+  }
+  .home h1 {
+    font-size: 100px;
+  }
+  .home {
+    height: 110vh;
+  }
+  .home .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+  }
+  /* promtion */
+  .promotion img,
+  .suggest img {
+    display: block;
+  }
+  /* suggest */
+
+  .left,
+  .right {
+    width: 100%;
+  }
+  .suggest .content {
+    flex-direction: column;
+  }
+  .suggest .right::after {
+    display: none;
+  }
+  .rooms img {
+    margin: 0;
+    margin-top: 50px;
+    display: block;
+  }
+  .rooms .box {
+    flex-direction: column;
+  }
+  .reservation .right2,
+  .reservation .left2 {
+    width: 100%;
+    margin: auto;
+    padding: 15px;
+  }
+  .reservation button {
+    margin-bottom: 50px;
+  }
+  .gallery img {
+    display: block;
+  }
+}
+
+/* MODAL POP UP */
+.bgModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 35px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(114, 109, 109, 0.8); /* Black w/ opacity */
+}
+
+.headerModal {
+  font-family: var(--font-content);
+  width: 80%;
+  height: 50px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  line-height: 50px;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  vertical-align: middle;
+  font-size: 38px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.contentModal {
+  background-color: #dfaa5b;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-family: var(--font-content);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+}
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+.contentModal form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.contentModal form div {
+  display: flex;
+  justify-content: center;
+}
+.contentModal table:first-child {
+  margin: 10px 50px 0;
+  /* background-color: violet; */
+}
+.contentModal table:first-child td {
+  padding: 10px 0;
+}
+.contentModal table:last-child {
+  margin: 0 50px;
+  width: 250px;
+  height: 350px;
+  /* background-color: lightcoral; */
+}
+.contentModal th {
+  text-align: left;
+  color: white;
+  font-size: 22px;
+}
+.contentModal tr td:first-child label {
+  font-weight: bold;
+  margin-right: 50px;
+}
+.contentModal input,
+.contentModal select,
+.contentModal textarea {
+  width: 200px;
+  height: 25px;
+}
+.contentModal textarea {
+  width: 300px;
+  height: 200px;
+}
+.contentModal button {
+  width: 200px;
+  height: 50px;
+  background-color: black;
+  color: white;
+  border: 0;
+  border-radius: 15px 15px;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 40px 0 0 0;
+  cursor: pointer;
+}
+.contentModal button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}

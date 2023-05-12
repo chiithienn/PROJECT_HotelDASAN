@@ -1,0 +1,428 @@
+<!-- <img src="../assets/images/fernando-alvarez-rodriguez.jpg" alt=""> -->
+<body>
+  <!--  -->
+  <section class="home" id="home">
+    <div class="container">
+      <h1>OUR ROOM</h1>
+      <p>Enjoy your vacation</p>
+
+      <!-- <div class="content grid">
+        <div class="box">
+          <span>CHECKIN DATE </span> <br />
+          <input type="date" placeholder="29/20/2021" />
+        </div>
+        <div class="box">
+          <span>CHECKOUT DATE </span> <br />
+          <input type="date" placeholder="29/20/2021" />
+        </div>
+        <div class="box">
+          <span>ADULTS</span> <br />
+          <input type="number" placeholder="01" />
+        </div>
+        <div class="box">
+          <span>CHILDREN </span> <br />
+          <input type="number" placeholder="01" />
+        </div>
+        <div class="box">
+          <span>BRANCH </span> <br />
+          <select id="branchMove">
+            <option>Ha Noi</option>
+            <option>Ho Chi Minh</option>
+            <option>Da Nang</option>
+            <option>Phan Thiet</option>
+          </select>
+        </div>
+        <div class="box1">
+          <button class="flex1">
+            <span>Check Availability</span>
+            <i class="fas fa-arrow-circle-right"></i>
+          </button>
+        </div>
+      </div> -->
+    </div>
+  </section>
+
+  <!--  -->
+  <section class="promotion" id="promotion">
+    <div class="container">
+      <div id="slideshow">
+        <div class="slide-wrapper">
+          <div class="slide">
+            <a href="./Uu_dai.html"><img src="../assets/images/Hotel.png"/></a>
+          </div>
+          <div class="slide">
+            <a href="./promotionDetail7.html">
+              <img src="../assets/images/Black and Yellow Modern Black Friday Sale Facebook Ad.png" />
+            </a>
+          </div>
+          <div class="slide">
+            <a href="./promotionDetail8.html">
+              <img src="../assets/images/Black Gold Modern Black Friday Sale Flyer.png" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--  -->
+  <section class="suggest" id="suggest">
+    <div class="container">
+      <div class="heading">
+        <h1>OUR SUGGEST</h1>
+      </div>
+      <!--  -->
+      <div class="content flex top">
+        <div class="left">
+          <h3>RESORT CLASSIC ROOM OCEANVIEW</h3>
+          <p>
+            Relax at our luxury resort in Vietnam where contemporary design
+            meets Vietnamese-inspired décor amidst a spacious 70 sqm Classic
+            Room.
+          </p>
+          <a href="/booking-room">
+            <button class="flex1">
+              <span>View more</span>
+              <i class="fas fa-arrow-circle-right"></i>
+            </button>
+          </a>
+        </div>
+        <div class="right narrower">
+          <img
+            src="../assets/images/ICPQ_Resort-Classic-Ocean-View1-1-870x555.jpg"
+            alt=""
+            width="500px"
+            height="300px"
+          />
+        </div>
+      </div>
+      <!-- suggest2 -->
+      <div class="content flex top1">
+        <div class="left">
+          <h3>ROYAL STYLE WITH ROYAL ROOM</h3>
+          <p>
+            Bringing great inspiration and energy by the spacious space of the
+            corner unit with a large balcony full of sunlight and the
+            exclusive privileges we bring to you.
+          </p>
+          <a href="/booking-room">
+            <button class="flex1">
+              <span>View more</span>
+              <i class="fas fa-arrow-circle-right"></i>
+            </button>
+          </a>
+        </div>
+        <div class="right narrower">
+          <img
+            src="../assets/images/luxury.jpg"
+            alt=""
+            width="500px"
+            height="300px"
+          />
+        </div>
+      </div>
+      <!--  -->
+      <div class="content flex top">
+        <div class="left">
+          <h3>WARMER WITH VINTAGE ROOM</h3>
+          <p>
+            Bringing great inspiration and energy by the spacious space of the
+            vintage room. Enjoy your vacation with your family
+          </p>
+          <a href="/booking-room">
+            <button class="flex1">
+              <span>View more</span>
+              <i class="fas fa-arrow-circle-right"></i></button
+          ></a>
+        </div>
+        <div class="right narrower">
+          <img
+            src="../assets/images/vintageroom.jpg"
+            alt=""
+            width="500px"
+            height="300px"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--  -->
+  <section class="rooms" id="rooms">
+    <div class="container">
+      <!-- Heading -->
+      <div class="heading">
+        <h1>OUR HOTEL</h1>
+      </div>
+      <!--  -->
+      <div class="background">
+        <div class="content grid2 mtop">
+          <!--  -->
+          <div class="box flex" *ngFor="let branch of branches; let i=index">
+            <div id="hanoi" class="left">
+              <img
+                src="../assets/images/thiet-ke-khach-san-hien-dai-5-sao-13-tang-so-huu-khong-gian-nghi-duong-hoan-hao-1.jfif"
+                alt="" *ngIf="i==0"
+              />
+              <img
+                src="../assets/images/dlg-hotel-danang-khach-san-4-sao-ven-bien-da-nang-1568778998.jpg"
+                alt="" *ngIf="i==1"
+              />
+              <img src="../assets/images/hochiminh.jpg" *ngIf="i==2"/>
+              <img src="../assets/images/a6cbb9f91a47fc4658f5fb179a943091.jpg" *ngIf="i==3"/>
+            </div>
+            <div class="right">
+              <h2>{{branch?.HotelName}} {{branch?.BranchName}}</h2>
+              <div class="rate flex">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p>
+                {{branch?.Description}}
+              </p>
+              <h5>From 1.000.000 VND/night</h5>
+              <a href="/booking-room">
+                <button class="flex1">
+                  <span>Check Now</span>
+                  <i class="fas fa-arrow-circle-right"></i>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUTTON FORM BOOKING -->
+  <!-- <div class="btnFormBooking">
+    <button>BOOKING NOW</button>
+  </div> -->
+
+  <!--  -->
+  <section class="gallery">
+    <div class="container">
+      <div class="heading">
+        <h1>OUR GALLERY</h1>
+      </div>
+      <div class="container1">
+        <div class="mySlides">
+          <img src="../assets/images/11111111.jpg" style="width: 100%" />
+        </div>
+
+        <div class="mySlides">
+          <img src="../assets/images/11111111.jpg" style="width: 100%" />
+        </div>
+
+        <div class="mySlides">
+          <img src="../assets/images/11111111.jpg" style="width: 100%" />
+        </div>
+
+        <div class="mySlides">
+          <img src="../assets/images/11111111.jpg" style="width: 100%" />
+        </div>
+
+        <div class="mySlides">
+          <img src="../assets/images/11111111.jpg" style="width: 100%" />
+        </div>
+
+        <div class="mySlides">
+          <img src="../assets/images/11111111.jpg" style="width: 100%" />
+        </div>
+
+        <a class="prev">&#10094;</a>
+        <a class="next">&#10095;</a>
+
+        <div class="caption-container">
+          <p id="caption"></p>
+        </div>
+
+        <div class="row">
+          <div class="column">
+            <img
+              class="demo cursor"
+              src="../assets/images/viewsuggest3.jpg"
+              style="width: 100%"
+            />
+          </div>
+          <div class="column">
+            <img
+              class="demo cursor"
+              src="../assets/images/uu dai.jpg"
+              style="width: 100%"
+            />
+          </div>
+          <div class="column">
+            <img
+              class="demo cursor"
+              src="../assets/images/4.jpg"
+              style="width: 100%"
+            />
+          </div>
+          <div class="column">
+            <img
+              class="demo cursor"
+              src="../assets/images/3.jpg"
+              style="width: 100%"
+            />
+          </div>
+          <div class="column">
+            <img
+              class="demo cursor"
+              src="../assets/images/2.jpg"
+              style="width: 100%"
+            />
+          </div>
+          <div class="column">
+            <img
+              class="demo cursor"
+              src="../assets/images/1.jpg"
+              style="width: 100%"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL POPUP -->
+  <div class="bgModal" id="bgModal">
+    <div class="headerModal">
+      <span class="close" id="close">&times;</span>
+      <span>MAKE YOUR RESERVATION</span>
+    </div>
+    <div class="contentModal">
+      <form action="payment.html">
+        <div>
+          <table>
+            <tr>
+              <th colspan="2">Your information</th>
+            </tr>
+            <tr>
+              <td><label for="fullname">Full name</label></td>
+              <td>
+                <input
+                  type="text"
+                  name="fullname"
+                  id="fullname"
+                  placeholder="Enter your name"
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <td><label for="email">Email</label></td>
+              <td>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter your email"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td><label for="phone">PhoneNo</label></td>
+              <td>
+                <input
+                  type="text"
+                  name="phone"
+                  id="phone"
+                  placeholder="Enter your number"
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <td><label for="payment">Payment Method</label></td>
+              <td>
+                <input
+                  type="text"
+                  name="payment"
+                  placeholder="Only accept online payment"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td><label for="note">Notes</label></td>
+              <td>
+                <textarea
+                  name="note"
+                  id="note"
+                  placeholder="Enter your message"
+                ></textarea>
+              </td>
+            </tr>
+          </table>
+          <!--  -->
+          <table>
+            <tr>
+              <th colspan="2">Selected Room Information</th>
+            </tr>
+            <tr>
+              <td><label for="branch">Branch</label></td>
+              <td>
+                <select name="branch" id="branch">
+                  <option value="Ho Chi Minh">Ho Chi Minh</option>
+                  <option value="Da Nang">Da Nang</option>
+                  <option value="Phan Thiet">Phan Thiet</option>
+                  <option value="Ha Noi">Ha Noi</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="roomtype">Roomtype</label></td>
+              <td>
+                <select name="roomtype" id="roomtype">
+                  <option value="Deluxe King">Deluxe King</option>
+                  <option value="Deluxe Triple">Deluxe Triple</option>
+                  <option value="Deluxe Queen">Deluxe Queen</option>
+                  <option value="Deluxe Twin">DeluxeTwin</option>
+                  <option value="Deluxe Double">Deluxe Double</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="adult">Adults</label></td>
+              <td>
+                <input
+                  type="number"
+                  name="adult"
+                  id="adult"
+                  min="0"
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <td><label for="child">Children</label></td>
+              <td>
+                <input
+                  type="number"
+                  name="child"
+                  id="child"
+                  min="0"
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <td><label for="fromdate">From</label></td>
+
+              <td>
+                <input type="date" name="fromdate" id="fromdate" required />
+                <label for="todate">to</label>
+                <input type="date" name="todate" id="todate" required />
+              </td>
+            </tr>
+          </table>
+        </div>
+        <button>Confirm booking</button>
+      </form>
+    </div>
+  </div>
+</body>

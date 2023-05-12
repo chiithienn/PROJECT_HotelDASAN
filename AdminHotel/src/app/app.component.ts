@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -35,5 +36,18 @@ export class AppComponent {
       default:
         break;
     }
+  }
+
+  exitAdminPage(){
+    Swal.fire({
+      title: 'Do you want to logout?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = 'http://localhost:4004/sign-in';
+      }
+    });
   }
 }
