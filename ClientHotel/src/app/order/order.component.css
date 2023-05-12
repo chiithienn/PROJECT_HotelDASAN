@@ -1,0 +1,108 @@
+.container-detail{
+  display: flex;
+  /* align-items: center; */
+  margin: 10px 20px;
+  top: 0;
+  /* background-color: lightcyan; */
+}
+
+.container-info-user{
+  margin: 0 0 0 20px;
+}
+
+.avatar{
+  border: 1px solid black;
+  width: 250px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px #bbbbbb;
+  text-align: center;
+}
+.avatar img{
+  height: 180px;
+  width: 180px;
+  padding: 2px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #dfdfdf;
+}
+.container-btn input{
+  margin: 0 0 5px 0;
+}
+
+
+.container-row{
+  display: flex;
+}
+.container-row label{
+  margin: 0 50px 0 0;
+}
+
+.p-3{
+  width: 100%;
+}
+.btn-danger{
+  width: 80px;
+  padding: 10px 0;
+}
+.not-lg{
+  background-color: rgba(0, 0, 0, 1) !important;
+}
+.not-login{
+  width: 40%;
+}
+
+.container-cart{
+  margin: 0 auto;
+  width: 80%;
+}
+
+/* The Modal (background) */
+.modal-bg {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  margin: 0 auto;
+  padding: 0;
+  border: 1px solid #888;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  overflow-y: auto;
+  max-height: 90vh;
+  max-width: auto;
+  /* min-width: 85%; */
+  max-width: 95%;
+  min-height: 50vh;
+}
+.exit{
+  float: right;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+  color: red;
+  border: 1.5px solid black;
+  padding: 8px;
+  background-color: white;
+  position: absolute;
+  top: 14px;
+  right: 16px;
+}
+.exit:hover{
+  box-shadow: 0px 0px 10px #bbbbbb;
+}

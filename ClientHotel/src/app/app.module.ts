@@ -14,6 +14,12 @@ import { ForgetPWComponent } from './forget-pw/forget-pw.component';
 import { ServiceHotelComponent } from './service-hotel/service-hotel.component';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
 import { FooterMenuComponent } from './footer-menu/footer-menu.component';
+import { BookingRoomComponent } from './booking-room/booking-room.component';
+import { OverviewComponent } from './overview/overview.component';
+import { PaymentComponent } from './payment/payment.component';
+import { PersonalPageComponent } from './personal-page/personal-page.component';
+import { CartComponent } from './cart/cart.component';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +33,13 @@ import { FooterMenuComponent } from './footer-menu/footer-menu.component';
     ForgetPWComponent,
     ServiceHotelComponent,
     HeaderMenuComponent,
-    FooterMenuComponent
+    FooterMenuComponent,
+    BookingRoomComponent,
+    OverviewComponent,
+    PaymentComponent,
+    PersonalPageComponent,
+    CartComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

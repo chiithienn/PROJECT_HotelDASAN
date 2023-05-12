@@ -1,48 +1,72 @@
 <body>
   <div class="form_content">
-    <a href="./index.html"><h1>Dasan Hotel</h1></a>
+    <a href="/home-page"><h1>Dasan Hotel</h1></a>
     <h5>Sign up your account.</h5>
     <div class="fill_content">
       <form action="#" method="post">
-        <input
-          class="text"
-          type="text"
-          name="phone"
-          placeholder="Phone number"
-          required=""
-        />
-        <input
+        <div *ngIf="step1">
+          <input
           class="text email"
           type="email"
           name="email"
+          [(ngModel)]="email"
           placeholder="Email"
           required=""
-        />
-        <input
-          class="text"
-          type="password"
-          name="password"
-          placeholder="Password"
-          required=""
-        />
-        <input
-          class="text w3lpass"
-          type="password"
-          name="password"
-          placeholder="Confirm Password"
-          required=""
-        />
-
-        <div class="form_checkbox">
+          />
+          <input
+            class="text"
+            type="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Password"
+            required=""
+          />
+          <input
+            class="text w3lpass"
+            type="password"
+            name="ConfirmPassword"
+            [(ngModel)]="confirmPassword"
+            placeholder="Confirm Password"
+            required=""
+          />
+        </div>
+        <div *ngIf="step2">
+          <input
+          class="text email"
+          type="text"
+          name="name"
+          [(ngModel)]="name"
+          placeholder="Your Name"
+          required
+          />
+          <input
+            class="text"
+            type="text"
+            name="phone"
+            [(ngModel)]="phone"
+            placeholder="Phone Number"
+            required
+          />
+          <input
+            class="text w3lpass"
+            type="date"
+            name="DOB"
+            [(ngModel)]="DOB"
+            placeholder="Date of Birth"
+            required
+          />
+        </div>
+        <div class="form_checkbox" *ngIf="step2">
           <label>
-            <input type="checkbox" class="checkbox" required="" />
+            <input type="checkbox" class="checkbox" required="" [(ngModel)]="agreeTerm" (click)="changeAgree()"/>
             <span>I agree to the terms & conditions</span>
           </label>
         </div>
-        <input type="submit" value="Sign up" />
+        <input type="submit" value="Next" (click)="nextStep()" *ngIf="step1"/>
+        <input type="submit" value="Register" *ngIf="step2" (click)="register()"/>
       </form>
       <p>
-        Have an account? <a href="./SIGNIN.html"><b>Sign In</b> </a>
+        Have an account? <a href="/sign-in"><b>Sign In</b> </a>
       </p>
     </div>
   </div>

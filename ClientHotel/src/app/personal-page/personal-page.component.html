@@ -1,0 +1,52 @@
+<!-- {{user|json}} -->
+<div class="container-detail">
+  <div class="avatar">
+    <img src="{{user?.Avatar ? user?.Avatar : 'assets/images/account.png'}}" alt="">
+    <div>
+      <!-- <label class="label" for="FullName">Full Name</label> -->
+      <p><strong>{{user?.FullName}}</strong></p>
+    </div>
+    <hr>
+    <div class="container-btn">
+      <input type="button" class="form-control" name="" id="" value="Personal Page" (click)="openPersonalPage()">
+      <input type="button" class="form-control" name="" id="" value="Cart" (click)="openCartPage()">
+      <input type="button" class="form-control" name="" id="" value="Order" (click)="openOrderPage()">
+      <input type="button" class="form-control" name="" id="" value="Logout" (click)="logout()">
+    </div>
+  </div>
+  <div class="container-info-user" *ngIf="user">
+    <table class="infoUpdate">
+    <tr>
+      <td>
+        <label for="Email">Email | AccountName</label>
+        <input type="email" class="form-control" name="Email" id="Email" [(ngModel)]="user.AccountName" [disabled]="allowUpdate">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="Name">Name</label>
+        <input type="text" class="form-control" name="Name" id="Name" [(ngModel)]="user.FullName" [disabled]="allowUpdate">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="PhoneNumber">Phone Number</label>
+        <input type="text" class="form-control" name="PhoneNumber" id="PhoneNumber" [(ngModel)]="user.PhoneNumber" [disabled]="allowUpdate">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="DOB">DOB</label>
+        <input type="date" class="form-control" name="DOB" id="DOB" [(ngModel)]="user.DOB" [disabled]="allowUpdate">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="button" class="form-control" name="" id="" value="Enable Update" *ngIf="allowUpdate" (click)="openUpdateInfo()">
+        <input type="button" class="form-control" name="" id="" value="Update Information" *ngIf="!allowUpdate" (click)="updateInfo()">
+        <input type="button" class="form-control" name="" id="" value="Change Password" (click)="promptChangePassword()">
+      </td>
+    </tr>
+    </table>
+  </div>
+</div>

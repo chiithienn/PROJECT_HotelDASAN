@@ -1,0 +1,66 @@
+<div class="container-detail">
+  <div class="avatar">
+    <img src="{{user?.Avatar ? user?.Avatar : 'assets/images/account.png'}}" alt="">
+    <div>
+      <!-- <label class="label" for="FullName">Full Name</label> -->
+      <p><strong>{{user?.FullName}}</strong></p>
+    </div>
+    <hr>
+    <div class="container-btn">
+      <input type="button" class="form-control" name="" id="" value="Personal Page" (click)="openPersonalPage()">
+      <input type="button" class="form-control" name="" id="" value="Cart" (click)="openCartPage()">
+      <input type="button" class="form-control" name="" id="" value="Order" (click)="openOrderPage()">
+      <input type="button" class="form-control" name="" id="" value="Logout" (click)="logout()">
+    </div>
+  </div>
+
+  <div class="container-cart">
+    <h3 class="text-center text-white bg-dark p-3">Your Cart</h3>
+    <div class="container">
+      <table class="table table -hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Room Name</th>
+            <th>Adult</th>
+            <th>Children</th>
+            <th>Capacity</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Branch</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cartDetail of cart?.CartDetails; let i=index">
+            <td>
+              <input type="checkbox" name="" id="">
+            </td>
+            <td>{{cartDetail?.RoomType}}</td>
+            <td><input type="number" name="" id="" [(ngModel)]="cartDetail.Adults" (change)="addToCart(cartDetail)"></td>
+            <td><input type="number" name="" id="" [(ngModel)]="cartDetail.Children"></td>
+            <td>{{cartDetail?.Capacity}}</td>
+            <td>{{cartDetail?.CheckInDate}}</td>
+            <td>{{cartDetail?.CheckOutDate}}</td>
+            <td>{{cartDetail?.Branch}}</td>
+            <td>{{cartDetail?.TotalLine}}</td>
+            <td>
+              <button (click)="deleteCartDetail(cartDetail._id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">
+              Total Price: <strong>{{cart?.TotalPrice.toLocaleString('vi-VN')}}</strong> VNĐ
+            </td>
+            <td colspan="5">
+              <button (click)="bookRoom(cart?._id)">Book now</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,13 +1,4 @@
   <body>
-        <!-- <link rel="stylesheet" href="./CSS/register_utility_service.css" /> -->
-        <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-      />
-      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-      <script src="./JS/register_utility_service.js" defer></script>
-    <!-- HEADER -->
-    <div id="header"></div>
     <!-- TITLE -->
     <div class="title">
       <h1>CONVENIENT SERVICES </h1>
@@ -116,13 +107,13 @@
           <h1>Restaurant</h1>
           <p>Reservation required (does not handle any unreserved cases).</p>
         </td>
-        <td>
+        <!-- <td>
           <div id="containerTick1">
             <span id="tick1" onclick="tick1()" title="Click to select">
               +
             </span>
           </div>
-        </td>
+        </td> -->
       </tr>
       <!-- Pool -->
       <tr class="rowUtility">
@@ -150,13 +141,13 @@
           <h1>Spa</h1>
           <p>Service price is 500,000 VND/person (Reservation required).</p>
         </td>
-        <td>
+        <!-- <td>
           <div id="containerTick2">
             <span id="tick2" onclick="tick2()" title="Click to select">
               +
             </span>
           </div>
-        </td>
+        </td> -->
       </tr>
       <!-- Bar -->
       <tr class="rowUtility">
@@ -181,148 +172,6 @@
 
     <!-- Button Register -->
     <div class="btnSendReq">
-      <input type="button" value="Booking Now" onclick="popUp()" />
+      <input type="button" value="Booking Now" (click)="openBookingRoom()"/>
     </div>
-
-    <!-- MODAL POPUP -->
-    <div class="bgModal" id="bgModal">
-      <div class="headerModal">
-        <span class="close" id="close">&times;</span>
-        <span>PLEASE FILL IN THE FORM BELOW</span>
-      </div>
-      <div class="contentModal">
-        <form action="#">
-          <table class="fillLeft">
-            <tr>
-              <th colspan="2">CONFERENCE BOOKING</th>
-            </tr>
-            <tr>
-              <td><label for="fullName">Full name</label></td>
-              <td><input type="text" name="fullName" required /></td>
-            </tr>
-            <tr>
-              <td><label for="phone">Phone</label></td>
-              <td><input type="text" name="phone" required /></td>
-            </tr>
-            <tr>
-              <td><label for="email">Email</label></td>
-              <td><input type="email" name="email" /></td>
-            </tr>
-            <tr>
-              <td><label for="numReservation">Reservation number</label></td>
-              <td><input type="text" name="numReservation" required /></td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <input
-                  type="button"
-                  value="Send request"
-                  onclick="popUpMessage()"
-                />
-              </td>
-            </tr>
-          </table>
-
-          <!--  -->
-          <div class="fillRight">
-            <table id="restaurant" class="restaurantForm">
-              <tr>
-                <th colspan="2">RESTAURANT</th>
-              </tr>
-              <tr>
-                <td><label for="numPeopleRes">Number of people</label></td>
-                <td>
-                  <input
-                    type="number"
-                    name="numPeopleRes"
-                    id="numPeopleRes"
-                    required
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td><label for="fromDateRes">Date from</label></td>
-                <td>
-                  <input
-                    type="date"
-                    name="fromDateRes"
-                    id="fromDateRes"
-                    required
-                  />
-                  <label for="toDateRes">to</label>
-                  <input type="date" name="toDateRes" id="toDateRes" required />
-                </td>
-              </tr>
-              <tr>
-                <td><label for="fromTime">Time from</label></td>
-                <td>
-                  <input type="date" name="fromTime" id="fromTime" required />
-                  <label for="toTime">to</label>
-                  <input type="date" name="toTime" id="toTime" required />
-                </td>
-              </tr>
-            </table>
-            <table id="spa" class="spaForm">
-              <tr>
-                <th colspan="2">SPA</th>
-              </tr>
-              <tr>
-                <td><label for="numPeopleSpa">Number of people</label></td>
-                <td>
-                  <input
-                    type="number"
-                    name="numPeopleSpa"
-                    id="numPeopleSpa"
-                    required
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td><label for="fromDateSpa">Date from</label></td>
-                <td>
-                  <input
-                    type="date"
-                    name="fromDateSpa"
-                    id="fromDateSpa"
-                    required
-                  />
-                  <label for="toDateSpa">to</label>
-                  <input type="date" name="toDateSpa" id="toDateSpa" required />
-                </td>
-              </tr>
-              <tr>
-                <td><label for="fromTimeSpa">Time from</label></td>
-                <td>
-                  <input
-                    type="date"
-                    name="fromTimeSpa"
-                    id="fromTimeSpa"
-                    required
-                  />
-                  <label for="toTimeSpa">to</label>
-                  <input type="date" name="toTimeSpa" id="toTimeSpa" required />
-                </td>
-              </tr>
-            </table>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- MODAL WHEN CLICK SEND REQUEST -->
-    <div class="modalSendSuccess" id="modalSendSuccess">
-      <div class="messageModal">
-        <div>
-          <img src="./images/success.png" />
-        </div>
-        <div>Request send successfully!</div>
-        <div>We will contact for details consultancy in the minest time.</div>
-        <div>
-          <button id="okClose">OK</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div id="footer"></div>
   </body>

@@ -1,0 +1,89 @@
+<div *ngIf="dataLoaded" class="modal-bg more-opacity">
+  <div class="loader"></div>
+</div>
+
+<div class="container-payment">
+  <section action="#" method="get" *ngIf="showPayment">
+    <a href="/booking-room"
+      ><img id="cancel" src="assets/images/cancel-icon.png"
+    /></a>
+    <div class="row">
+      <div class="col">
+        <h3 class="title">billing address</h3>
+
+        <div class="inputBox">
+          <span>full name (*) :</span>
+          <input type="text" id="fullname" placeholder="Full Name" [(ngModel)]="user.FullName" />
+        </div>
+        <div class="inputBox">
+          <span>email (*):</span>
+          <input type="email" placeholder="nguyenvanteo@gmail.com" [(ngModel)]="user.AccountName"/>
+        </div>
+        <div class="inputBox">
+          <span>address :</span>
+          <input type="text" placeholder="room - street - locality" />
+        </div>
+        <div class="inputBox">
+          <span>city :</span>
+          <input type="text" placeholder="Ho Chi Minh" />
+        </div>
+
+        <div class="flex">
+          <div class="inputBox">
+            <span>state (*) :</span>
+            <input type="text" placeholder="VietNam" />
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <h3 class="title">payment</h3>
+
+        <div class="inputBox">
+          <span>cards accepted :</span>
+          <img src="assets/images/card_img.png" alt="" />
+        </div>
+        <div class="inputBox">
+          <span>name on card (*) :</span>
+          <input type="text" id="nameOnCard" placeholder="NGUYEN VAN TEO" />
+        </div>
+        <div class="inputBox">
+          <span>credit card number (*) :</span>
+          <input type="number" placeholder="1111-2222-3333-4444" />
+        </div>
+        <div class="inputBox">
+          <span>exp month (*) :</span>
+          <input type="number" placeholder="1" min="1" max="12" />
+        </div>
+
+        <div class="flex">
+          <div class="inputBox">
+            <span>exp year (*) :</span>
+            <input type="number" placeholder="2022" />
+          </div>
+          <div class="inputBox">
+            <span>CVV (*) :</span>
+            <input type="text" placeholder="123" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <input type="submit" value="proceed to checkout" class="submit-btn" (click)="createOrder()"/>
+  </section>
+
+  <div class="payment-success" *ngIf="showSuccess">
+    <div class="card">
+      <div id="circle">
+        <i class="checkmark">✓</i>
+      </div>
+      <h1>Payment received</h1>
+      <p>
+        Hi <span id="nameOnCard"></span>, Your transaction was successful !
+      </p>
+      <br />
+      <a href="/home-page"><button id="continue">Continue</button></a>
+      <!-- Link den homepage -->
+    </div>
+  </div>
+</div>

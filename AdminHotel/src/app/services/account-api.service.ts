@@ -23,9 +23,17 @@ export class AccountAPIService {
   }
 
   handleError(error:HttpErrorResponse){
-    // if(error.status===400){
-    //   return throwError (()=> new Error(error.error))
-    // }
+    if(error.status===400){
+      // return throwError (()=> new Error(error.error))
+      return throwError(() => error).pipe(
+        catchError((err) => {
+          if (err.status === 400) {
+            err = { ...err, responseType: 'text' };
+          }
+          return throwError(() => err.error);
+        })
+      );
+    }
     return throwError (()=>new Error(error.message))
   }
 

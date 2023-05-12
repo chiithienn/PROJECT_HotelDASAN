@@ -9,3 +9,7 @@
   height: 100%;
   margin: 0;
 }
+
+footer{
+  margin-top: 0 !important;
+}

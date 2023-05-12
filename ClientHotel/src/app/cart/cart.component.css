@@ -1,0 +1,46 @@
+.container-detail{
+  display: flex;
+  /* align-items: center; */
+  margin: 10px 20px;
+  top: 0;
+  /* background-color: lightcyan; */
+}
+
+.container-info-user{
+  margin: 0 0 0 20px;
+}
+
+.avatar{
+  border: 1px solid black;
+  width: 250px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px #bbbbbb;
+  text-align: center;
+}
+.avatar img{
+  height: 180px;
+  width: 180px;
+  padding: 2px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #dfdfdf;
+}
+.container-btn input{
+  margin: 0 0 5px 0;
+}
+
+
+.container-row{
+  display: flex;
+}
+.container-row label{
+  margin: 0 50px 0 0;
+}
+
+.container-cart{
+  margin: 0 auto;
+  top: 0;
+  width: 80%;
+}

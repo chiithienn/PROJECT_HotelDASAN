@@ -1,7 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Anek+Latin:wght@300;400;500;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
-
-footer {
+.container-footer {
   width: 100%;
   background-color: #000000;
   color: #ffffff;
@@ -10,17 +7,17 @@ footer {
   max-height: 500px;
   font-family: "Ubuntu", sans-serif;
   font-style: normal;
-  margin: 0%;
 }
 
 .logoFooter {
   width: 264px;
   height: 264px;
+  margin: 0 20px;
 }
 .k2 {
   color: #ffffff;
   padding-left: 5%;
-  margin-top: 2%;
+  margin: 2% 0 1% 5%;
   font-weight: 500;
   font-size: 15px;
   line-height: 24px;
@@ -43,15 +40,16 @@ footer {
   color: #ffffff;
 }
 .k4 {
+  display: flex;
+  flex-direction: column;
   padding-top: 3%;
-  padding-left: 3%;
   font-size: medium;
 }
 
 .k4 #emailAdd {
-  width: 60%;
+  width: 80%;
   height: 39px;
-  margin: 10px auto;
+  margin: 10px 0;
   background: #ffffff;
   border-radius: 7px;
   color: gray;
@@ -60,7 +58,7 @@ footer {
 
 .k4 #subcribe {
   text-align: center;
-  width: 60%;
+  width: 80%;
   height: 44px;
   background: #dfaa5b;
   color: #ffffff;

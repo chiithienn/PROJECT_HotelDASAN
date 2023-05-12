@@ -1,0 +1,187 @@
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-transform: capitalize;
+  transition: all 0.2s linear;
+}
+
+.container-payment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 100px;
+  min-height: 100vh;
+  background: linear-gradient(90deg, #dfaa5b 60%, #d48c1f 40.1%);
+  /* margin: 0 50px 0 10px; */
+}
+
+.container-payment section {
+  padding: 20px;
+  width: 700px;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.container-payment section .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.container-payment section .row .col {
+  flex: 1 1 250px;
+}
+
+.container-payment section .row .col .title {
+  font-size: 20px;
+  color: #333;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.container-payment section .row .col .inputBox {
+  margin: 15px 0;
+}
+
+.container-payment section .row .col .inputBox span {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.container-payment section .row .col .inputBox input {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  font-size: 15px;
+  text-transform: none;
+}
+
+.container-payment section .row .col .inputBox input:focus {
+  border: 1px solid #000;
+}
+
+.container-payment section .row .col .flex {
+  display: flex;
+  gap: 15px;
+}
+
+.container-payment section .row .col .flex .inputBox {
+  margin-top: 5px;
+}
+
+.container-payment section .row .col .inputBox img {
+  height: 34px;
+  margin-top: 5px;
+  filter: drop-shadow(0 0 1px #000);
+}
+
+.container-payment section .submit-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 17px;
+  background: #dfaa5b;
+  color: #fff;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.container-payment section .submit-btn:hover {
+  background: #dfaa5b;
+}
+
+#cancel {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* The Modal (background) */
+.modal-bg {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+}
+.more-opacity{
+  background-color: rgba(0, 0, 0, 0.95)
+}
+.loader {
+  margin: 180px auto;
+  border: 20px solid #EAF0F6;
+  border-radius: 50%;
+  border-top: 20px solid #FF7A59;
+  border-bottom: 20px solid rgb(97, 97, 246);
+  width: 150px;
+  height: 150px;
+  animation: spinner 2s linear infinite;
+}
+
+@keyframes spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.payment-success {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+.payment-success h1 {
+  color: #88b743;
+  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+  font-weight: 900;
+  font-size: 40px;
+}
+.payment-success p {
+  color: #404f5e;
+  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+  font-size: 20px;
+}
+.payment-success i {
+  color: #9abc66;
+  font-size: 100px;
+  line-height: 200px;
+}
+.payment-success .card {
+  background: white;
+  padding: 60px;
+  border-radius: 4px;
+  box-shadow: 0 2px 3px #618755;
+  display: inline-block;
+  margin: 0 auto;
+}
+.payment-success #circle {
+  border-radius: 200px;
+  height: 200px;
+  width: 200px;
+  background: #d7e6c2;
+  margin: 0 auto;
+}
+.payment-success button#continue {
+  width: 100%;
+  padding: 12px;
+  font-size: 20px;
+  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+  background: #88b743;
+  color: #fff;
+  margin-top: 5px;
+  cursor: pointer;
+}
+.payment-success button a {
+  text-decoration: none;
+  font-weight: bolder;
+  color: #fff;
+}

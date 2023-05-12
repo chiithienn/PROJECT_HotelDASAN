@@ -1,29 +1,38 @@
 
 <header class="header">
   <div class="container_header">
-    <nav class="navbar flex1">
+    <nav class="flex1">
       <ul class="nav-menu">
         <li>
           <div class="logo">
-            <a href="./index.html"
+            <a href="/home-page"
               ><img class="img_logo" src="assets/images/dasan.png"
             /></a>
           </div>
         </li>
-        <li class="signin"><a href="./SIGNIN.html">Sign in</a></li>
-        <li class="aboutus"><a href="./aboutUs.html">About Us</a></li>
-        <li><a href="./bookingroom.html">Booking room</a></li>
-        <li><a href="./register_utility_service.html">Service pack</a></li>
-        <li><a href="./booking_event.html">Booking event</a></li>
-        <li><a href="./Uu_dai.html">Promotion</a></li>
+        <li class="signin" [routerLink]="'home-page'"><span>Home</span></li>
+        <li class="aboutus" [routerLink]="'about-us'"><span>About Us</span></li>
+        <li [routerLink]="'overview'"><span>Branch/Room Overview</span></li>
+        <li [routerLink]="'booking-room'"><span>Booking room</span></li>
+        <li [routerLink]="'service-hotel'"><span>Service pack</span></li>
+        <li [routerLink]="'promotion'"><span>Promotion</span></li>
         <li class="dropdown">
-          <a class="drop"
-            >EN &nbsp;<img class="img_flag" src="assets/images/EN.png"
-          /></a>
-          <div class="dropdown__content">
-            <a href="trang-tieng-viet"
-              >VI &nbsp;<img class="img_flag" src="assets/images/VN.png"
-            /></a>
+          <div *ngIf="!infoAccount?._id">
+            <span class="cart-qty" (click)="openCartPage()">{{numCartDetail}}</span>
+            <img class="cart" src="assets/images/icon-v-shopping-cart.png" alt="" (click)="openCartPage()">
+            <span [routerLink]="'sign-in'">Login</span> &nbsp;&nbsp;|&nbsp;&nbsp;
+            <span [routerLink]="'sign-up'">Register</span>
+          </div>
+          <div *ngIf="infoAccount?._id">
+            <span class="cart-qty" (click)="openCartPage()">{{numCartDetail}}</span>
+            <img class="cart" src="assets/images/icon-v-shopping-cart.png" alt="" (click)="openCartPage()">
+            <img (click)="showDropDown = !showDropDown" src="{{infoAccount?.Avatar ? infoAccount?.Avatar : 'assets/images/account.png'}}" alt="">
+            <div class="dropdown-options" *ngIf="showDropDown">
+              <a href="/personal-page">Personal Page</a>
+              <a href="/cart-page">Cart</a>
+              <a href="/order-page">Order</a>
+              <a (click)="logout()" *ngIf="infoAccount?._id">Logout</a>
+            </div>
           </div>
         </li>
       </ul>

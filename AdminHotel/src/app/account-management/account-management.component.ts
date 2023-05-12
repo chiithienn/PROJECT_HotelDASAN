@@ -15,11 +15,14 @@ export class AccountManagementComponent {
   valid:boolean=true
   adminPassword=''
   adminPasswordConfirm=''
+
   showDetailAccount=false
   showLockAccount=false
   showSetValidAccounts=false
+
   accountNames: string[] = [];
   AccountName: string[] = [];
+
   anAccount=true
   multiAccount=false
 
@@ -65,42 +68,6 @@ export class AccountManagementComponent {
     }
   }
 
-  lockAccount(){
-    if(this.adminPassword!=this.adminPasswordConfirm){
-      alert("Password do not match")
-      return
-    }
-    if(confirm("Bạn có muốn LOCK tài khoản "+this.accountName+" không?")){
-      this._service.lockAccount(this.accountName,this.adminPassword).subscribe({
-        next:()=>{
-          alert("Đã LOCK tài khoản "+this.accountName+"!")
-          location.reload()
-        },
-        error: (err)=> {
-          (JSON.parse(err.message).message=='Incorrect password') ? alert(JSON.parse(err.message).message) : this.errMessage=err.message
-        }
-      })
-    }
-  }
-
-  unLockAccount(){
-    if(this.adminPassword!=this.adminPasswordConfirm){
-      alert("Password do not match")
-      return
-    }
-    if(confirm("Bạn có muốn UNLOCK tài khoản "+this.accountName+" không?")){
-      this._service.unLockAccount(this.accountName,this.adminPassword).subscribe({
-        next:()=>{
-          alert("Đã UNLOCK tài khoản "+this.accountName+"!")
-          location.reload()
-        },
-        error: (err)=> {
-          (JSON.parse(err.message).message=='Incorrect password') ? alert(JSON.parse(err.message).message) : this.errMessage=err.message
-        }
-      })
-    }
-  }
-
   setValidAccounts(valid:boolean,type:boolean) {
     if (this.adminPassword !== this.adminPasswordConfirm) {
       alert("Passwords do not match");
@@ -116,7 +83,7 @@ export class AccountManagementComponent {
             location.reload();
           },
           error: (err) => {
-            (JSON.parse(err.message).message=='Incorrect password') ? alert(JSON.parse(err.message).message) : this.errMessage=err.message
+            (err.message=='Incorrect password') ? alert(err.message) : this.errMessage=err.message
           }
         });
       }
@@ -129,8 +96,7 @@ export class AccountManagementComponent {
             location.reload();
           },
           error: (err) => {
-            // (JSON.parse(err.message).message=='Incorrect password') ? alert(JSON.parse(err.message).message) : this.errMessage=err.message
-            this.errMessage = err.message
+            (err.message=='Incorrect password') ? alert(err.message) : this.errMessage=err.message
           }
         });
       }
